@@ -1,0 +1,67 @@
+.bg {
+  height: 100vh;
+  flex-direction: column;
+  .start {
+    margin: 2rem;
+  }
+}
+mat-card {
+  margin: 2rem;
+}
+.container {
+  width: 300px;
+  mat-form-field {
+    margin-top: 1rem;
+  }
+}
+
+.players {
+  border: solid 2px rgba(255, 99, 71, 0.932);
+  border-radius: 10px;
+  width: 600px;
+  height: 400px;
+  padding: 1rem;
+  margin: 1rem;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+app-player {
+  display: block;
+}
+
+@media all and(max-width:800px) {
+  .bg {
+    justify-content: flex-start;
+    .start {
+      position: fixed;
+      bottom: 5rem;
+      right: 3rem;
+      margin: 0;
+    }
+  }
+  mat-card {
+    margin: 0;
+    width: 100%;
+  }
+  .container {
+    width: 100%;
+    mat-form-field {
+      margin-top: 1rem;
+    }
+  }
+
+  .players {
+    border: none;
+    width: 100%;
+    height: fit-content;
+    padding: 1rem;
+    margin: 1rem;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+
+  app-player {
+    display: block;
+  }
+}
