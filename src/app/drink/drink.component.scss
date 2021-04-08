@@ -1,0 +1,99 @@
+.bg {
+  flex-direction: row;
+}
+.player {
+  height: 100%;
+  background-color: #7b1fa2;
+  width: 600px;
+  color: white;
+  overflow: hidden;
+  padding: 0 .8rem;
+  .name {
+    display: block;
+    text-align: center;
+    font-size: 2.5rem;
+    width: 100%;
+    line-height: 50px;
+  }
+}
+.task {
+  height: 100%;
+  color: rgba(255, 255, 255, 0.856);
+  font-size: 2rem;
+  padding: 0 4rem;
+  width: 100%;
+  div {
+    text-align: center;
+    line-height: 40px;
+    width: 100%;
+  }
+}
+
+.next {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  width: 200px;
+  height: 200px;
+  background: #7b1fa2;
+  border-radius: 200px 0 0 0;
+  -moz-border-radius: 200px 0 0 0;
+  -webkit-border-radius: 200px 0 0 0;
+  color: #ffffff;
+  mat-icon {
+    font-size: 6rem;
+    position: absolute;
+    right: 30px;
+    bottom: 30px;
+    height: fit-content;
+    width: fit-content;
+  }
+}
+
+.close {
+  position: fixed;
+  top: 0;
+  left: 0;
+  color: white;
+  width: 50px;
+  height: 50px;
+  background: tomato;
+  border-radius: 0 0 100px 0;
+  -moz-border-radius: 0 0 100px 0;
+  -webkit-border-radius: 0 0 100px 0;
+  mat-icon {
+    position: absolute;
+    left: 8px;
+    top: 8px;
+  }
+}
+
+@media all and(max-width:800px) {
+  .bg {
+    flex-direction: column;
+  }
+  .player {
+    height: fit-content;
+    min-height: 5rem;
+    width: 100%;
+    .name {
+      font-size: 1rem;
+    }
+    padding: 1rem 0;
+  }
+  .task {
+    height: 100%;
+    font-size: 0.8rem;
+    padding: 0.5rem;
+    div {
+      text-align: center;
+      line-height: 1.2rem;
+      width: 100%;
+    }
+    .next {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+    }
+  }
+}

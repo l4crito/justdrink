@@ -8,6 +8,35 @@ export const leftToRigthAnimation = trigger('leftToRigthAnimation', [
         animate('200ms', style({ transform: 'translateX(-100%)' }))
     ])
 ]);
+export const nameAnimation = trigger('nameAnimation', [
+    transition(':enter', [
+        style({ transform: 'translateX(-100%)' }),
+        animate('300ms  ease-in-out', style({ transform: 'translateX(0)' })),
+    ]),
+    transition(':leave', [
+        animate('300ms  ease-in-out', style({ transform: 'translateX(100%)' }))
+    ])
+]);
+export const inOutAnimation = trigger('inOutAnimation', [
+    state('left',
+        style({ transform: 'translateX(-100%)' }),
+    ),
+    state('middle',
+        style({ transform: 'translateX(0%)' }),
+    ),
+    state('right',
+        style({ transform: 'translateX(100%)' }),
+    ),
+    transition('middle=>right', animate('300ms  ease-in-out')),
+    transition('middle=>left', animate('300ms  ease-in-out')),
+]);
+export const playerAnimation = trigger('playerAnimation', [
+    transition(':enter', [
+        style({ transform: 'translateY(-100%)' }),
+        animate('200ms', style({ transform: 'translateY(0)' })),
+    ]),
+
+]);
 export const zoomIn = trigger('zoomIn', [
     transition(':enter', [
         style({ transform: 'scale(0)' }),
@@ -15,6 +44,15 @@ export const zoomIn = trigger('zoomIn', [
     ]),
     transition(':leave', [
         animate('200ms', style({ transform: 'scale(0)' }))
+    ])
+]);
+export const rotateLeft = trigger('rotateLeft', [
+    transition(':enter', [
+        style({ transform: 'rotate(90deg)' }),
+        animate('300ms', style({ transform: 'rotate(0deg)' })),
+    ]),
+    transition(':leave', [
+        animate('200ms', style({ transform: 'rotate(90deg)' }))
     ])
 ]);
 export const topToBottomAnimation = trigger('topToBottomAnimation', [

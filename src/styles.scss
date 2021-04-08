@@ -1,3 +1,7 @@
+.bg {
+  height: 100vh;
+  flex-direction: column;
+}
 .flex-start {
   display: flex;
   align-items: center;
@@ -32,7 +36,8 @@ body {
 }
 body {
   margin: 0;
-  font-family: Roboto, "Helvetica Neue", sans-serif;
+  // font-family: "Dela Gothic One" "Helvetica Neue", sans-serif;
+  font-family: "Dela Gothic One", cursive !important;
   background-color: rgba(0, 0, 0, 0.952);
   box-sizing: border-box;
 }
@@ -71,6 +76,10 @@ body {
   -ms-user-select: none; /* Internet Explorer/Edge */
   user-select: none; /* Non-prefixed version, currently
                                   supported by Chrome, Edge, Opera and Firefox */
+}
+
+.pointer {
+  cursor: pointer;
 }
 
 @media all and(max-width:800px) {

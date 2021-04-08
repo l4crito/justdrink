@@ -1,9 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { GameGuard } from './guards/game.guard';
 
 const routes: Routes = [
-  { path: 'jugadores', loadChildren: () => import('./players/players.module').then(m => m.PlayersModule) },
-  { path: '**', pathMatch: 'full', redirectTo: '/jugadores' },
+  { path: '', loadChildren: () => import('./players/players.module').then(m => m.PlayersModule) },
+  { path: 'tomar', canActivate: [GameGuard], loadChildren: () => import('./drink/drink.module').then(m => m.DrinkModule) },
+  { path: '**', pathMatch: 'full', redirectTo: '' },
 
 ];
 
