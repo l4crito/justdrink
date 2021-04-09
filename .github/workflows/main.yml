@@ -15,7 +15,7 @@ jobs:
         with:
           node-version: '12.x'
       - run: npm i
-      - run: npm run ng build -- --prod --base-href=/justdrink/
+      - run: npm run ng build -- --prod --base-href=l4crito.github.io/justdrink/
       
 
       - name: Deploy 🚀
