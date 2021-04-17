@@ -1,0 +1,21 @@
+<form class="flex-around container" [formGroup]="form" (ngSubmit)="addTask()">
+    <mat-form-field appearance="outline" class="input" color="warn">
+        <mat-label>Agregue una tarea </mat-label>
+        <input spellcheck="false" autocomplete="off" type="text" matInput formControlName="task" #txtTask
+            matInput>
+
+    </mat-form-field>
+    <button mat-fab type="submit" color="primary" [disabled]="form.invalid">
+        <mat-icon>add</mat-icon>
+    </button>
+</form>
+
+<div class="tasks">
+    <div class="task flex-between line ns" *ngFor="let task of taskProvider.tasks" @leftToRigthAnimation
+        [ngClass]="{'highlight': task.highlight}">
+        <div>{{task.task}}</div>
+        <button mat-icon-button (click)="taskProvider.removeTask(task)">
+            <mat-icon>remove_circle_outline</mat-icon>
+        </button>
+    </div>
+</div>

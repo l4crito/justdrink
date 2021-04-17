@@ -4,6 +4,7 @@
 }
 mat-card {
   margin: 2rem;
+  background-color: transparent;
 }
 .container {
   width: 300px;
@@ -13,11 +14,11 @@ mat-card {
 }
 
 .players {
-  border: solid 2px rgba(255, 99, 71, 0.932);
-  border-radius: 10px;
+  // border: solid 2px rgba(255, 99, 71, 0.932);
+  // border-radius: 10px;
   width: 600px;
   height: 400px;
-  padding: 1rem;
+  // padding: 1rem;
   margin: 1rem;
   overflow-y: auto;
   overflow-x: hidden;

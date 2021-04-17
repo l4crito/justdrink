@@ -1,10 +1,10 @@
 <div class="bg flex-center">
     <mat-card>
         <form class="flex-around container" [formGroup]="form" (ngSubmit)="addPlayer()">
-            <mat-form-field appearance="outline" class="input" color="accent">
+            <mat-form-field appearance="outline" class="input" w>
                 <mat-label>JUGADOR </mat-label>
-                <input spellcheck="false" autocomplete="off" type="text" matInput formControlName="photo"
-                    cdkFocusInitial name="photo" #photo formControlName="name">
+                <input spellcheck="false" autocomplete="off" type="text" matInput formControlName="photo" name="photo"
+                    #photo formControlName="name" #txtPlayer>
 
             </mat-form-field>
             <button mat-mini-fab type="submit" color="primary" [disabled]="form.invalid">
@@ -16,7 +16,7 @@
         <app-player [showDelete]="true" [player]="item" *ngFor="let item of playerProvider.players"
             @leftToRigthAnimation></app-player>
     </div>
-    <button color="primary" class="start" mat-fab [disabled]="playerProvider.players.length<2" (click)="play()">
+    <button color="primary" class="start" mat-fab [disabled]="this.playerProvider.players.length < 2 || !this.taskProvider.tasks.length" (click)="start()">
         <mat-icon>play_arrow</mat-icon>
     </button>
 </div>

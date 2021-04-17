@@ -1,0 +1,25 @@
+.container {
+  margin:  0 2rem;
+  .input {
+    width: 100%;
+  }
+  button{
+    margin-top: -15px;
+    margin-left: 1rem;
+  }
+}
+
+.tasks {
+  height: 300px;
+  overflow-y: auto;
+  margin: 0 1rem;
+  .task{
+    div{
+      font-size: 1.5rem;
+    }
+  }
+}
+
+.highlight{
+  background-color: tomato;
+}

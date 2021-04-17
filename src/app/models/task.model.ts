@@ -1,7 +1,8 @@
 export interface TaskModel {
-    id: number;
+    id: any;
     task?: string;
     type?: TaskType[];
+    highlight?: boolean;
 }
 
 export enum TaskType {

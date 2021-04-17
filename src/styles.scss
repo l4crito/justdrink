@@ -44,7 +44,7 @@ body {
 .line {
   padding: 2px 1rem;
   margin: 2px 1rem;
-  border-bottom: solid 1px rgba(221, 216, 216, 0.274);
+  // border-bottom: solid 1px rgba(221, 216, 216, 0.274);
   transition: ease-in-out 300ms;
   cursor: pointer;
   &:hover {
@@ -80,6 +80,10 @@ body {
 
 .pointer {
   cursor: pointer;
+}
+
+.highlight {
+  background-color: tomato;
 }
 
 @media all and(max-width:800px) {

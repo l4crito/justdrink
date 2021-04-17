@@ -6,12 +6,14 @@ import { PlayersComponent } from './players.component';
 import { MaterialModule } from '../material/material.module';
 import { SharedModule } from '../shared/shared.module';
 import { PlayerComponent } from './components/player/player.component';
+import { TaskComponent } from './components/task/task.component';
 
 
 @NgModule({
   declarations: [
     PlayersComponent,
-    PlayerComponent
+    PlayerComponent,
+    TaskComponent
   ],
   imports: [
     CommonModule,

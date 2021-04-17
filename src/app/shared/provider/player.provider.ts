@@ -1,6 +1,7 @@
 import { ApplicationRef, ChangeDetectorRef, Injectable } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { PlayerModel, PlayerPosition } from 'src/app/models/player.model';
+import { highlight } from 'src/app/utils/highlight.util';
 import { TaskProvider } from './task.provider';
 
 @Injectable({
@@ -9,10 +10,9 @@ import { TaskProvider } from './task.provider';
 export class PlayerProvider {
 
   players: PlayerModel[] = [
-    { name: 'CHRISTIAN CAICEDO', position: PlayerPosition.LEFT },
-    { name: 'ESTEFANI LUCERO', position: PlayerPosition.LEFT },
-    { name: 'DIEGO CAICEDO', position: PlayerPosition.LEFT },
-    { name: 'LISS RIVERA', position: PlayerPosition.LEFT },
+    { name: 'HERRERA', position: PlayerPosition.LEFT },
+    { name: 'LUCERO', position: PlayerPosition.LEFT },
+    { name: 'CAICEDO', position: PlayerPosition.LEFT },
     { name: 'RODRIGO ESPIN', position: PlayerPosition.LEFT },
     { name: 'DIANA VALLEJO', position: PlayerPosition.LEFT },
   ];
@@ -25,7 +25,7 @@ export class PlayerProvider {
   addPlayer(player: PlayerModel) {
     const playerPresent = this.players.find(pla => pla.name === player.name);
     if (playerPresent) {
-      this.highLightPlayer(playerPresent);
+      highlight(playerPresent);
     } else {
       this.players.unshift(player);
     }
@@ -61,19 +61,14 @@ export class PlayerProvider {
     this.nextPlayer();
   }
 
-  highLightPlayer(player: PlayerModel) {
-    player.highlight = true;
-    setTimeout(() => {
-      player.highlight = false;
-    }, 400);
-  }
+
 
   prevPlayer() {
     const index = this.current === 0 ? (this.players.length - 1) : (this.current - 1);
     const alreadyPlayed = this.players[index];
     if (alreadyPlayed?.task) {
       this.current = index;
-      this.taskProvider.removeAsignedTask(this.currentPlayer?.task?.id);
+      this.taskProvider.removeAsignedTask(this.currentPlayer?.task);
       this.currentPlayer = null;
       const task = alreadyPlayed.task;
       alreadyPlayed.task = null;
