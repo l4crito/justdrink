@@ -15,7 +15,7 @@ jobs:
         with:
           node-version: '12.x'
       - run: yarn install
-      - run: npm run ng build -- --prod --base-href=l4crito.github.io/justdrink/
+      - run: npm run ng build -- --prod --base-href=/justdrink/
       
 
       - name: Deploy 🚀
