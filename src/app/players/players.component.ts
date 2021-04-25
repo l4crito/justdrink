@@ -90,8 +90,11 @@ export class PlayersComponent implements OnInit, OnDestroy {
 
   addTask() {
     const bottomSheetRef = this.matBottomSheet.open(TaskComponent);
-    bottomSheetRef.afterDismissed().subscribe(() => {
+    bottomSheetRef.afterDismissed().subscribe((edited: boolean) => {
       this.addHotKeys();
+      if (edited) {
+        this.canResume = false;
+      }
     });
   }
 

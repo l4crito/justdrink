@@ -11,27 +11,27 @@ export class TaskProvider {
   tasks: TaskModel[] = [
     {
       id: 0,
-      task: '0'
+      task: 'Toma la persona que tu elijas :3'
     },
     {
       id: 1,
-      task: '1'
+      task: 'Toma por shunsh@'
     },
     {
       id: 2,
-      task: '2'
+      task: 'Escoje una persona y ponle un reto'
     },
     {
       id: 3,
-      task: '3'
+      task: 'Baila un pe perreito! al menos 30 secs'
     },
     {
       id: 4,
-      task: '4'
+      task: 'Da 5 vueltas sobre ti mismo y despues toma!'
     },
     {
       id: 5,
-      task: '5'
+      task: 'Toma por fe@'
     },
   ];
   assignedTasks: TaskModel[] = [];

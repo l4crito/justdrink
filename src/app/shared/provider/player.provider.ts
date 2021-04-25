@@ -12,11 +12,11 @@ import { debounceTime } from 'rxjs/operators';
 export class PlayerProvider {
   resume = false;
   players: PlayerModel[] = [
-    { name: 'HERRERA', position: PlayerPosition.LEFT },
+    { name: 'CARITO', position: PlayerPosition.LEFT },
     { name: 'LUCERO', position: PlayerPosition.LEFT },
-    { name: 'CAICEDO', position: PlayerPosition.LEFT },
-    { name: 'RODRIGO ESPIN', position: PlayerPosition.LEFT },
-    { name: 'DIANA VALLEJO', position: PlayerPosition.LEFT },
+    { name: 'CHRISTIAN', position: PlayerPosition.LEFT },
+    { name: 'DIEGO', position: PlayerPosition.LEFT },
+    { name: 'DIANA', position: PlayerPosition.LEFT },
   ];
   current = 0;
   currentPlayer!: PlayerModel | null;
@@ -113,6 +113,7 @@ export class PlayerProvider {
       const popedTask = this.playerTasks.pop();
       this.taskProvider.removeAsignedTask(popedTask?.task);
     } else {
+      highlight(this.playerTasks[0]?.player)
       return;
     }
     const lastTask = this.lastAssignedTask();

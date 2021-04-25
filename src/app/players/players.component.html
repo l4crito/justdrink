@@ -7,7 +7,7 @@
                     #photo formControlName="name" #txtPlayer>
 
             </mat-form-field>
-            <button mat-mini-fab type="submit" color="primary" [disabled]="form.invalid">
+            <button mat-fab type="submit" color="primary" [disabled]="form.invalid">
                 <mat-icon> add </mat-icon>
             </button>
         </form>
@@ -16,7 +16,7 @@
         <app-player [showDelete]="true" [player]="item" *ngFor="let item of playerProvider.players"
             @leftToRigthAnimation></app-player>
     </div>
-    <div class="flex-center">
+    <div class="flex-center buttons">
         <button color="warn" class="start button" mat-raised-button *ngIf="canResume" (click)="resume()">
             CONTINUAR
         </button>

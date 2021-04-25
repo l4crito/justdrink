@@ -14,7 +14,7 @@ import { TaskProvider } from 'src/app/shared/provider/task.provider';
 })
 export class TaskComponent implements OnInit, OnDestroy {
   @ViewChild('txtTask') txtPlayer: ElementRef | any;
-
+  edited = false;
   form: FormGroup;
   constructor(
     public taskProvider: TaskProvider,
@@ -35,6 +35,7 @@ export class TaskComponent implements OnInit, OnDestroy {
       this.addTask();
       return false;
     }, ['input', 'textarea']));
+    this._bottomSheetRef.dismiss(this.edited);
   }
 
   ngOnInit(): void {
@@ -60,5 +61,10 @@ export class TaskComponent implements OnInit, OnDestroy {
       stringArr.push(S4);
     }
     return stringArr.join('-');
+  }
+
+  deleteTask(task: TaskModel) {
+    this.taskProvider.removeTask(task);
+    this.edited = true;
   }
 }
