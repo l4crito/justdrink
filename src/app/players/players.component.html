@@ -16,7 +16,14 @@
         <app-player [showDelete]="true" [player]="item" *ngFor="let item of playerProvider.players"
             @leftToRigthAnimation></app-player>
     </div>
-    <button color="primary" class="start" mat-fab [disabled]="this.playerProvider.players.length < 2 || !this.taskProvider.tasks.length" (click)="start()">
-        <mat-icon>play_arrow</mat-icon>
-    </button>
+    <div class="flex-center">
+        <button color="warn" class="start button" mat-raised-button *ngIf="canResume" (click)="resume()">
+            CONTINUAR
+        </button>
+        <button color="primary" class="start button" mat-raised-button
+            [disabled]="this.playerProvider.players.length < 2 || !this.taskProvider.tasks.length" (click)="start()">
+            EMPEZAR
+        </button>
+    </div>
+
 </div>

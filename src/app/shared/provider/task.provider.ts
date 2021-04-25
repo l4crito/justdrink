@@ -25,8 +25,17 @@ export class TaskProvider {
       id: 3,
       task: '3'
     },
+    {
+      id: 4,
+      task: '4'
+    },
+    {
+      id: 5,
+      task: '5'
+    },
   ];
   assignedTasks: TaskModel[] = [];
+  currentTask: TaskModel | undefined | null;
   constructor() { }
 
   assignTask(): any {

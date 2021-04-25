@@ -27,8 +27,10 @@ export const inOutAnimation = trigger('inOutAnimation', [
     state('right',
         style({ transform: 'translateX(100%)' }),
     ),
-    transition('middle=>right', animate('300ms  ease-in-out')),
-    transition('middle=>left', animate('300ms  ease-in-out')),
+    transition('middle => right', animate('250ms  ease-in-out')),
+    transition('left => middle', animate('250ms  ease-in-out')),
+    transition('right => middle', animate('250ms  ease-in-out')),
+    transition('middle => left', animate('250ms  ease-in-out')),
 ]);
 export const playerAnimation = trigger('playerAnimation', [
     transition(':enter', [

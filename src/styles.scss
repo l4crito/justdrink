@@ -85,6 +85,26 @@ body {
 .highlight {
   background-color: tomato;
 }
+.next {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  width: 200px;
+  height: 200px;
+  background: #7b1fa2;
+  border-radius: 200px 0 0 0;
+  -moz-border-radius: 200px 0 0 0;
+  -webkit-border-radius: 200px 0 0 0;
+  color: #ffffff;
+  mat-icon {
+    font-size: 6rem;
+    position: absolute;
+    right: 30px;
+    bottom: 30px;
+    height: fit-content;
+    width: fit-content;
+  }
+}
 
 @media all and(max-width:800px) {
   ::-webkit-scrollbar {

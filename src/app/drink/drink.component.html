@@ -1,12 +1,13 @@
 <div class="bg flex-center">
     <div class="player flex-center" @playerAnimation>
-        <div class="name" @nameAnimation *ngIf="playerProvider?.currentPlayer"> {{playerProvider?.currentPlayer?.name }}
+        <div class="name" [@inOutAnimation]="playerProvider.currentPlayer?.position">
+            {{playerProvider?.currentPlayer?.name }}
         </div>
     </div>
 
     <div class="task flex-center">
-        <div *ngIf="playerProvider?.currentPlayer?.task?.task" @apearAnimation>
-            {{playerProvider?.currentPlayer?.task?.task|titlecase}}</div>
+        <div *ngIf="taskProvider.currentTask?.task" @apearAnimation>
+            {{taskProvider.currentTask?.task|titlecase}}</div>
     </div>
     <div class="close  ns pointer" mat-ripple (click)="back()">
         <mat-icon>arrow_back_ios</mat-icon>

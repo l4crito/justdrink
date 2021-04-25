@@ -17,6 +17,7 @@ import { TaskComponent } from './components/task/task.component';
 })
 export class PlayersComponent implements OnInit, OnDestroy {
   form!: FormGroup;
+  canResume = false;
   @ViewChild('txtPlayer') txtPlayer: ElementRef | any;
   constructor(
     public playerProvider: PlayerProvider,
@@ -55,7 +56,7 @@ export class PlayersComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-
+    this.canResume = this.playerProvider.verifyIfCanResume();
   }
 
   addPlayer() {
@@ -66,15 +67,26 @@ export class PlayersComponent implements OnInit, OnDestroy {
     this.form.controls.name.setValue('');
   }
   start() {
+    this.play();
+  }
+  resume() {
+    this.play(true);
+
+  }
+
+  play(resume = false) {
     if (this.playerProvider.players.length < 2 || !this.taskProvider.tasks.length) {
       return;
     }
+    this.playerProvider.resume = resume;
     this.router.navigate(['/tomar']);
   }
 
   focusAddPlayer() {
     this.txtPlayer.nativeElement.focus();
   }
+
+
 
   addTask() {
     const bottomSheetRef = this.matBottomSheet.open(TaskComponent);

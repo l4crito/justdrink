@@ -1,14 +1,16 @@
-import { ApplicationRef, ChangeDetectorRef, Injectable } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Injectable } from '@angular/core';
+import { Subject, Subscription } from 'rxjs';
 import { PlayerModel, PlayerPosition } from 'src/app/models/player.model';
+import { TaskModel } from 'src/app/models/task.model';
 import { highlight } from 'src/app/utils/highlight.util';
 import { TaskProvider } from './task.provider';
+import { debounceTime } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PlayerProvider {
-
+  resume = false;
   players: PlayerModel[] = [
     { name: 'HERRERA', position: PlayerPosition.LEFT },
     { name: 'LUCERO', position: PlayerPosition.LEFT },
@@ -19,8 +21,24 @@ export class PlayerProvider {
   current = 0;
   currentPlayer!: PlayerModel | null;
   nextTimer: any = null;
-  assigningTask = false;
-  constructor(private taskProvider: TaskProvider) { }
+  playerTasks: { player: PlayerModel, task?: TaskModel }[] = [];
+
+  nextPlayerSubject = new Subject<boolean>();
+  prevPlayerSubject = new Subject<boolean>();
+  prevPlayerSubscription?: Subscription;
+  nextPlayerSubscription?: Subscription;
+  constructor(private taskProvider: TaskProvider) {
+    this.nextPlayerSubscription = this.nextPlayerSubject.pipe(
+      debounceTime(200)
+    ).subscribe(() => {
+      this.findNextPlayer();
+    })
+    this.prevPlayerSubscription = this.prevPlayerSubject.pipe(
+      debounceTime(200)
+    ).subscribe(() => {
+      this.findPrevPlayer();
+    })
+  }
 
   addPlayer(player: PlayerModel) {
     const playerPresent = this.players.find(pla => pla.name === player.name);
@@ -32,27 +50,17 @@ export class PlayerProvider {
   }
   removePlayer(player: PlayerModel) {
     this.players = this.players.filter(pla => pla.name !== player.name);
+    this.playerTasks = this.playerTasks.filter(playerTask => playerTask.player.name !== player.name);
+    if (player.name === this.currentPlayer?.name) {
+      const lastPlayer = this.lastPlayer();
+      if (lastPlayer) {
+        this.current = this.playerIndex(lastPlayer);
+        this.currentPlayer = lastPlayer;
+      }
+    }
   }
-  nextPlayer() {
-    if (this.assigningTask) {
-      return;
-    }
-    this.currentPlayer = null;
-    this.current++;
-    if (this.current + 1 > this.players.length) {
-      this.current = 0;
-    }
-    this.assigningTask = true;
-    this.nextTimer = setTimeout(() => {
-      this.currentPlayer = this.players[this.current];
-      this.currentPlayer.task = null;
-      setTimeout(() => {
-        if (this.currentPlayer) {
-          this.currentPlayer.task = this.taskProvider.assignTask();
-          this.assigningTask = false;
-        }
-      }, 500);
-    }, 350);
+  playerIndex(player: PlayerModel) {
+    return this.players.findIndex(playr => playr.name === player?.name);
   }
 
   start() {
@@ -61,32 +69,85 @@ export class PlayerProvider {
     this.nextPlayer();
   }
 
+  nextPlayer() {
+    this.nextPlayerSubject.next(true);
 
+  }
 
   prevPlayer() {
-    const index = this.current === 0 ? (this.players.length - 1) : (this.current - 1);
-    const alreadyPlayed = this.players[index];
-    if (alreadyPlayed?.task) {
-      this.current = index;
-      this.taskProvider.removeAsignedTask(this.currentPlayer?.task);
-      this.currentPlayer = null;
-      const task = alreadyPlayed.task;
-      alreadyPlayed.task = null;
+    this.prevPlayerSubject.next(true);
+  }
+  findNextPlayer() {
+    this.taskProvider.currentTask = null;
+    if (this.currentPlayer) {
+      this.currentPlayer.position = PlayerPosition.RIGHT;
+    }
+    setTimeout(() => {
+      if (this.currentPlayer) {
+        this.currentPlayer.position = PlayerPosition.LEFT;
+      }
+      this.current++;
+      if (this.current + 1 > this.players.length) {
+        this.current = 0;
+      }
+      this.currentPlayer = this.players[this.current];
       setTimeout(() => {
-        this.currentPlayer = alreadyPlayed;
-        this.currentPlayer.task = null;
+        if (this.currentPlayer) {
+          this.currentPlayer.position = PlayerPosition.MIDDLE;
+          this.playerTasks.push({ player: this.currentPlayer });
+          setTimeout(() => {
+            const task = this.taskProvider.assignTask();
+            const lastTask = this.lastAssignedTask();
+            this.taskProvider.currentTask = task;
+            if (lastTask) {
+              lastTask.task = task;
+            }
+          }, 500);
+        }
+
+      }, 280);
+    }, 280);
+  }
+  findPrevPlayer() {
+    if (this.playerTasks.length > 1) {
+      const popedTask = this.playerTasks.pop();
+      this.taskProvider.removeAsignedTask(popedTask?.task);
+    } else {
+      return;
+    }
+    const lastTask = this.lastAssignedTask();
+    if (lastTask) {
+      this.taskProvider.currentTask = null;
+      if (this.currentPlayer) {
+        this.currentPlayer.position = PlayerPosition.LEFT;
+      }
+      setTimeout(() => {
+        lastTask.player.position = PlayerPosition.RIGHT;
+        this.currentPlayer = lastTask.player;
         setTimeout(() => {
-          if (this.currentPlayer) {
-            this.currentPlayer.task = task;
-          }
-        }, 500);
-      }, 350);
+          lastTask.player.position = PlayerPosition.MIDDLE;
+          this.current = this.playerIndex(lastTask.player);
+          setTimeout(() => {
+            this.taskProvider.currentTask = lastTask.task;
+          }, 500);
+        }, 280);
+      }, 280);
+
     }
   }
 
+
   finsh() {
     this.taskProvider.assignedTasks = [];
-    this.players.forEach(player => player.task = null);
+    this.playerTasks = [];
   }
-
+  verifyIfCanResume(): boolean {
+    return this.playerTasks.length > 0 ? true : false;
+  }
+  lastPlayer() {
+    return this.lastAssignedTask()?.player;
+  }
+  lastAssignedTask() {
+    return this.playerTasks[this.playerTasks.length - 1];
+  }
 }

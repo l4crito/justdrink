@@ -6,8 +6,7 @@ export interface PlayerModel {
     gender?: Gender;
     like?: Gender;
     highlight?: boolean;
-    task?: TaskModel | null;
-    position?: PlayerPosition;
+    position: PlayerPosition;
 }
 
 export enum Gender {

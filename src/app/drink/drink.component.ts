@@ -1,10 +1,11 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { PlayerProvider } from '../shared/provider/player.provider';
-import { apearAnimation, nameAnimation, playerAnimation, zoomIn, rotateLeft } from '../animations';
+import { apearAnimation, nameAnimation, playerAnimation, zoomIn, rotateLeft, inOutAnimation } from '../animations';
 import { Hotkey, HotkeysService } from 'angular2-hotkeys';
 import { Router } from '@angular/router';
+import { TaskProvider } from '../shared/provider/task.provider';
 @Component({
-  animations: [nameAnimation, playerAnimation, apearAnimation, zoomIn, rotateLeft],
+  animations: [nameAnimation, playerAnimation, apearAnimation, zoomIn, rotateLeft, inOutAnimation],
   selector: 'app-drink',
   templateUrl: './drink.component.html',
   styleUrls: ['./drink.component.scss']
@@ -13,10 +14,14 @@ export class DrinkComponent implements OnInit, OnDestroy {
 
   constructor(
     public playerProvider: PlayerProvider,
+    public taskProvider: TaskProvider,
     private hotkeyService: HotkeysService,
     private router: Router
   ) {
-    this.playerProvider.start();
+    if (!this.playerProvider.resume || this.playerProvider.current < 0) {
+      this.playerProvider.finsh();
+      this.playerProvider.start();
+    }
     this.hotkeyService.add(new Hotkey(['enter', 'right'], (event: KeyboardEvent): boolean => {
       this.playerProvider.nextPlayer();
       return false;
@@ -50,7 +55,6 @@ export class DrinkComponent implements OnInit, OnDestroy {
 
   back() {
     this.router.navigate(['']);
-    this.playerProvider.finsh();
   }
 
 }
