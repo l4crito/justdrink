@@ -10,7 +10,7 @@
 </form>
 
 <div class="tasks">
-    <div class="task flex-between line ns" *ngFor="let task of taskProvider.tasks" @leftToRigthAnimation
+    <div class="task flex-between line ns" *ngFor="let task of taskProvider.tasks" @leftToRight
         [ngClass]="{'highlight': task.highlight}">
         <div>{{task.task}}</div>
         <button mat-icon-button (click)="deleteTask(task)">

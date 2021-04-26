@@ -1,10 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { PlayerModel } from 'src/app/models/player.model';
 import { PlayerProvider } from 'src/app/shared/provider/player.provider';
-import { leftToRigthAnimation } from '../../../animations';
+import { leftToRight } from '../../../animations';
 
 @Component({
-  animations: [leftToRigthAnimation],
+  animations: [leftToRight],
   selector: 'app-player',
   templateUrl: './player.component.html',
   styleUrls: ['./player.component.scss']

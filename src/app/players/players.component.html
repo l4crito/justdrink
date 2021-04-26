@@ -13,17 +13,25 @@
         </form>
     </mat-card>
     <div class="players ">
-        <app-player [showDelete]="true" [player]="item" *ngFor="let item of playerProvider.players"
-            @leftToRigthAnimation></app-player>
+        <app-player [showDelete]="true" [player]="item" *ngFor="let item of playerProvider.players" @leftToRight>
+        </app-player>
     </div>
     <div class="flex-center buttons">
-        <button color="warn" class="start button" mat-raised-button *ngIf="playerProvider.canResume" (click)="resume()" @apearAnimation>
+        <button color="warn" class="start button" mat-raised-button *ngIf="playerProvider.canResume" (click)="resume()"
+            @apearAnimation>
             CONTINUAR
         </button>
         <button color="primary" class="start button" mat-raised-button
             [disabled]="this.playerProvider.players.length < 2 || !this.taskProvider.tasks.length" (click)="start()">
             EMPEZAR
         </button>
+    </div>
+
+    <div class="dear flex-center" *ngIf="taskProvider.tasks.length &&this.taskProvider.animateBg" @rightToLeft>
+        <div class="number flex-center" @zoomIn *ngIf="taskProvider.animateNumber">
+            <span> {{taskProvider.tasks.length}} </span>
+            <span> Desafíos</span>
+        </div>
     </div>
 
 </div>

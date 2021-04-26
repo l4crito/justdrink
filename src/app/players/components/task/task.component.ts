@@ -2,12 +2,12 @@ import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/co
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatBottomSheetRef } from '@angular/material/bottom-sheet';
 import { Hotkey, HotkeysService } from 'angular2-hotkeys';
-import { leftToRigthAnimation } from 'src/app/animations';
+import { leftToRight } from 'src/app/animations';
 import { TaskModel } from 'src/app/models/task.model';
 import { TaskProvider } from 'src/app/shared/provider/task.provider';
 
 @Component({
-  animations: [leftToRigthAnimation],
+  animations: [leftToRight],
   selector: 'app-task',
   templateUrl: './task.component.html',
   styleUrls: ['./task.component.scss']

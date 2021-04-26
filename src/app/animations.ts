@@ -1,11 +1,20 @@
 import { trigger, transition, style, animate, query, stagger, state } from '@angular/animations';
-export const leftToRigthAnimation = trigger('leftToRigthAnimation', [
+export const leftToRight = trigger('leftToRight', [
     transition(':enter', [
         style({ transform: 'translateX(-100%)' }),
         animate('300ms', style({ transform: 'translateX(0)' })),
     ]),
     transition(':leave', [
         animate('200ms', style({ transform: 'translateX(-100%)' }))
+    ])
+]);
+export const rightToLeft = trigger('rightToLeft', [
+    transition(':enter', [
+        style({ transform: 'translateX(100%)' }),
+        animate('300ms', style({ transform: 'translateX(0)' })),
+    ]),
+    transition(':leave', [
+        animate('200ms', style({ transform: 'translateX(100%)' }))
     ])
 ]);
 export const nameAnimation = trigger('nameAnimation', [
@@ -42,10 +51,10 @@ export const playerAnimation = trigger('playerAnimation', [
 export const zoomIn = trigger('zoomIn', [
     transition(':enter', [
         style({ transform: 'scale(0)' }),
-        animate('300ms', style({ transform: 'scale(1)' })),
+        animate('300ms  ease-out', style({ transform: 'scale(1)' })),
     ]),
     transition(':leave', [
-        animate('200ms', style({ transform: 'scale(0)' }))
+        animate('300ms  ease-out', style({ transform: 'scale(0)' }))
     ])
 ]);
 export const rotateLeft = trigger('rotateLeft', [

@@ -11,6 +11,8 @@ export class TaskProvider {
   tasks: TaskModel[] = [];
   assignedTasks: TaskModel[] = [];
   currentTask: TaskModel | undefined | null;
+  animateBg = false;
+  animateNumber = false;
   constructor(private googleService: GoogleSheetService) { }
 
   assignTask(): any {
@@ -42,7 +44,7 @@ export class TaskProvider {
 
   getTasks() {
     this.googleService.getTasks().subscribe((res: any) => {
-      var lines = res.split("\n");
+      var lines = res.split("\r\n");
 
       var result = [];
 
@@ -65,8 +67,15 @@ export class TaskProvider {
       this.tasks = result.filter(t => t.id && t.reto).map(t => {
         return { id: t.id, task: t.reto }
       });
-      console.log("Retos", this.tasks.length)
+      this.animateDear();
     });
+  }
+
+  animateDear() {
+    this.animateBg = true;
+    setTimeout(() => {
+      this.animateNumber = true;
+    }, 500);
   }
 
 }
