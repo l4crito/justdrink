@@ -1,5 +1,5 @@
-import { ApplicationRef, ChangeDetectorRef, Injectable } from '@angular/core';
-import { PlayerModel } from 'src/app/models/player.model';
+import { Injectable } from '@angular/core';
+import { tasks } from 'src/app/mocks/tasks';
 import { TaskModel } from 'src/app/models/task.model';
 import { highlight } from 'src/app/utils/highlight.util';
 
@@ -8,32 +8,7 @@ import { highlight } from 'src/app/utils/highlight.util';
 })
 export class TaskProvider {
 
-  tasks: TaskModel[] = [
-    {
-      id: 0,
-      task: 'Toma la persona que tu elijas :3'
-    },
-    {
-      id: 1,
-      task: 'Toma por shunsh@'
-    },
-    {
-      id: 2,
-      task: 'Escoje una persona y ponle un reto'
-    },
-    {
-      id: 3,
-      task: 'Baila un pe perreito! al menos 30 secs'
-    },
-    {
-      id: 4,
-      task: 'Da 5 vueltas sobre ti mismo y despues toma!'
-    },
-    {
-      id: 5,
-      task: 'Toma por fe@'
-    },
-  ];
+  tasks: TaskModel[] = tasks;
   assignedTasks: TaskModel[] = [];
   currentTask: TaskModel | undefined | null;
   constructor() { }

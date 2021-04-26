@@ -6,7 +6,8 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class FirstCapitalPipe implements PipeTransform {
 
   transform(value: string | undefined | null, ...args: unknown[]): unknown {
-    return value ? value.substring(0, 1).toUpperCase().concat(value.substring(1, value.length)) : '';
+    value = value ? value.trim() : '';
+    return value ? value.substring(0, 1).toUpperCase().concat(value.substring(1, value.length).toLowerCase()) : '';
   }
 
 }
