@@ -26,7 +26,7 @@ import { environment } from '../environments/environment';
     })
   ],
   providers: [
-
+ 
   ],
   bootstrap: [AppComponent]
 })

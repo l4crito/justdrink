@@ -17,7 +17,6 @@ import { TaskComponent } from './components/task/task.component';
 })
 export class PlayersComponent implements OnInit, OnDestroy {
   form!: FormGroup;
-  canResume = false;
   @ViewChild('txtPlayer') txtPlayer: ElementRef | any;
   constructor(
     public playerProvider: PlayerProvider,
@@ -61,7 +60,7 @@ export class PlayersComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.canResume = this.playerProvider.verifyIfCanResume();
+    this.playerProvider.verifyIfCanResume();
   }
 
   addPlayer() {
@@ -98,10 +97,11 @@ export class PlayersComponent implements OnInit, OnDestroy {
     bottomSheetRef.afterDismissed().subscribe((edited: boolean) => {
       this.addHotKeys();
       if (edited) {
-        this.canResume = false;
+        this.playerProvider.canResume = false;
       }
     });
   }
+
 
 
 }

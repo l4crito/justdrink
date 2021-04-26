@@ -11,13 +11,14 @@ import { debounceTime } from 'rxjs/operators';
 })
 export class PlayerProvider {
   resume = false;
+  canResume = false;
   players: PlayerModel[] = [
-    { name: 'CARITO', position: PlayerPosition.LEFT },
-    { name: 'ISABRU', position: PlayerPosition.LEFT },
-    { name: 'LUCERO', position: PlayerPosition.LEFT },
-    { name: 'CHRISTIAN', position: PlayerPosition.LEFT },
-    { name: 'DIEGO', position: PlayerPosition.LEFT },
-    { name: 'DIANA', position: PlayerPosition.LEFT },
+    // { name: 'CARITO', position: PlayerPosition.LEFT },
+    // { name: 'ISABRU', position: PlayerPosition.LEFT },
+    // { name: 'LUCERO', position: PlayerPosition.LEFT },
+    // { name: 'CHRISTIAN', position: PlayerPosition.LEFT },
+    // { name: 'DIEGO', position: PlayerPosition.LEFT },
+    // { name: 'DIANA', position: PlayerPosition.LEFT },
   ];
   current = 0;
   currentPlayer!: PlayerModel | null;
@@ -52,6 +53,7 @@ export class PlayerProvider {
   removePlayer(player: PlayerModel) {
     this.players = this.players.filter(pla => pla.name !== player.name);
     this.playerTasks = this.playerTasks.filter(playerTask => playerTask.player.name !== player.name);
+    this.deletePlayerTasks(player);
     if (player.name === this.currentPlayer?.name) {
       const lastPlayer = this.lastPlayer();
       if (lastPlayer) {
@@ -145,13 +147,18 @@ export class PlayerProvider {
     this.taskProvider.assignedTasks = [];
     this.playerTasks = [];
   }
-  verifyIfCanResume(): boolean {
-    return this.playerTasks.length > 0 ? true : false;
+  verifyIfCanResume() {
+    this.canResume = this.playerTasks.length > 0 ? true : false;
   }
   lastPlayer() {
     return this.lastAssignedTask()?.player;
   }
   lastAssignedTask() {
     return this.playerTasks[this.playerTasks.length - 1];
+  }
+
+  deletePlayerTasks(player: PlayerModel) {
+    this.playerTasks = this.playerTasks.filter(playerTask => playerTask.player.name !== player.name);
+    this.verifyIfCanResume();
   }
 }

@@ -17,7 +17,7 @@
             @leftToRigthAnimation></app-player>
     </div>
     <div class="flex-center buttons">
-        <button color="warn" class="start button" mat-raised-button *ngIf="canResume" (click)="resume()">
+        <button color="warn" class="start button" mat-raised-button *ngIf="playerProvider.canResume" (click)="resume()" @apearAnimation>
             CONTINUAR
         </button>
         <button color="primary" class="start button" mat-raised-button

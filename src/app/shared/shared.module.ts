@@ -4,7 +4,14 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HighlightDirective } from './highlight.directive';
 import { FirstCapitalPipe } from './first-capital.pipe';
 
+import * as Hammer from 'hammerjs';
+import { HammerGestureConfig, HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
 
+export class MyHammerConfig extends HammerGestureConfig {
+  overrides = <any>{
+    swipe: { direction: Hammer.DIRECTION_ALL },
+  };
+}
 
 @NgModule({
   declarations: [
@@ -19,6 +26,12 @@ import { FirstCapitalPipe } from './first-capital.pipe';
     HighlightDirective,
     FormsModule,
     ReactiveFormsModule
+  ],
+  providers: [
+    {
+      provide: HAMMER_GESTURE_CONFIG,
+      useClass: MyHammerConfig,
+    },
   ]
 })
 export class SharedModule { }

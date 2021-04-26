@@ -6,14 +6,7 @@ import { DrinkComponent } from './drink.component';
 import { SharedModule } from '../shared/shared.module';
 import { MaterialModule } from '../material/material.module';
 
-import * as Hammer from 'hammerjs';
-import { HammerGestureConfig, HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
 
-export class MyHammerConfig extends HammerGestureConfig {
-  overrides = <any>{
-    swipe: { direction: Hammer.DIRECTION_ALL },
-  };
-}
 @NgModule({
   declarations: [
     DrinkComponent
@@ -25,10 +18,7 @@ export class MyHammerConfig extends HammerGestureConfig {
     MaterialModule
   ],
   providers: [
-    {
-      provide: HAMMER_GESTURE_CONFIG,
-      useClass: MyHammerConfig,
-    },
+
   ]
 })
 export class DrinkModule { }
