@@ -13,6 +13,7 @@ export class PlayerProvider {
   resume = false;
   players: PlayerModel[] = [
     { name: 'CARITO', position: PlayerPosition.LEFT },
+    { name: 'ISABRU', position: PlayerPosition.LEFT },
     { name: 'LUCERO', position: PlayerPosition.LEFT },
     { name: 'CHRISTIAN', position: PlayerPosition.LEFT },
     { name: 'DIEGO', position: PlayerPosition.LEFT },
@@ -64,6 +65,8 @@ export class PlayerProvider {
   }
 
   start() {
+    this.currentPlayer = null;
+    this.taskProvider.currentTask = null;
     const index = Math.floor(Math.random() * this.players.length);
     this.currentPlayer = this.players[index];
     this.nextPlayer();

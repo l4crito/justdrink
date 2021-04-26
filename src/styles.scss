@@ -34,12 +34,14 @@ html,
 body {
   height: 100%;
 }
+* {
+  box-sizing: border-box;
+}
 body {
   margin: 0;
   // font-family: "Dela Gothic One" "Helvetica Neue", sans-serif;
   font-family: "Dela Gothic One", cursive !important;
   background-color: rgba(0, 0, 0, 0.952);
-  box-sizing: border-box;
 }
 .line {
   padding: 2px 1rem;
@@ -87,36 +89,33 @@ body {
 }
 .next {
   position: fixed;
-  bottom: 0;
-  right: 0;
-  width: 200px;
-  height: 200px;
+  bottom: -10px;
+  right: -10px;
+  width: 150px;
+  height: 150px;
   background: #7b1fa2;
-  border-radius: 200px 0 0 0;
-  -moz-border-radius: 200px 0 0 0;
-  -webkit-border-radius: 200px 0 0 0;
+  border-radius: 150px;
+  -moz-border-radius: 150px;
+  -webkit-border-radius: 150px;
   color: #ffffff;
   mat-icon {
     font-size: 6rem;
-    position: absolute;
-    right: 30px;
-    bottom: 30px;
     height: fit-content;
     width: fit-content;
   }
 }
 
 @media all and(max-width:800px) {
-
   .next {
-    width: 60px;
-    height: 60px;
-    background: #7b1fa2;
-    border-radius: 60px 0 0 0;
-    -moz-border-radius: 60px 0 0 0;
-    -webkit-border-radius: 60px 0 0 0;
-    color: #ffffff;
+    width: 75px;
+    height: 75px;
+    border-radius: 75px;
+    -moz-border-radius: 75px;
+    -webkit-border-radius: 75px;
+    right: -9px;
+    bottom: -9px;
     mat-icon {
+      position: static;
       font-size: 2.4rem;
       right: 2px;
       bottom: 2px;

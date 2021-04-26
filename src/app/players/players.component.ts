@@ -30,9 +30,14 @@ export class PlayersComponent implements OnInit, OnDestroy {
       name: ['', [Validators.required]],
     });
     this.addHotKeys();
-    setTimeout(() => {
-      this.focusAddPlayer();
-    }, 300);
+
+    if (window.innerWidth > 800) {
+      setTimeout(() => {
+        this.focusAddPlayer();
+      }, 300);
+    }
+
+
   }
   addHotKeys() {
     this.hotkeyService.add(new Hotkey(['esc'], (event: KeyboardEvent): boolean => {

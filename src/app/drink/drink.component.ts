@@ -57,4 +57,18 @@ export class DrinkComponent implements OnInit, OnDestroy {
     this.router.navigate(['']);
   }
 
+
+  onSwipe(evt: any) {
+    console.log(evt)
+    const x = Math.abs(evt.deltaX) > 40 ? (evt.deltaX > 0 ? 'r' : 'l') : '';
+    switch(x){
+      case 'r':
+        this.playerProvider.nextPlayer();
+        break;
+      case 'l':
+        this.playerProvider.prevPlayer();
+        break;
+    }
+  }
+
 }

@@ -1,5 +1,8 @@
 <div class="bg flex-center">
     <div class="player flex-center" @playerAnimation>
+        <div class="close  ns pointer flex-center" mat-ripple (click)="back()">
+            <mat-icon>arrow_back_ios</mat-icon>
+        </div>
         <div class="name ns" [@inOutAnimation]="playerProvider.currentPlayer?.position">
             <div class="name ns" [appHighlight]="playerProvider.currentPlayer?.highlight">
                 {{playerProvider?.currentPlayer?.name }}
@@ -7,14 +10,13 @@
         </div>
     </div>
 
-    <div class="task flex-center">
+    <div class="task flex-center" (swipe)="onSwipe($event)">
         <div *ngIf="taskProvider.currentTask?.task" @apearAnimation>
             {{taskProvider.currentTask?.task|firstCapital}}</div>
     </div>
-    <div class="close  ns pointer" mat-ripple (click)="back()">
-        <mat-icon>arrow_back_ios</mat-icon>
-    </div>
-    <div class="next ns pointer mat-elevation-z3" mat-ripple (click)="playerProvider.nextPlayer()" @rotateLeft>
+
+    <div class="next ns pointer mat-elevation-z3 flex-center" mat-ripple (click)="playerProvider.nextPlayer()"
+        @rotateLeft>
         <mat-icon>navigate_next</mat-icon>
     </div>
 </div>

@@ -31,6 +31,8 @@ app-player {
   border-radius: 50px;
   font-size: 1.3rem;
   margin: 2rem;
+  font-weight: bold;
+  letter-spacing: 3px;
 }
 
 @media all and(max-width:800px) {
@@ -65,11 +67,11 @@ app-player {
     width: 100%;
     padding:1rem 2rem;
     .button {
-      height: 35px;
+      height: 40px;
       min-width: 100px;
       width: 90%;
-      border-radius: 35px;
-      font-size: 1rem;
+      border-radius: 40px;
+      font-size: 1.2rem;
       margin: .5rem 0;
     }
   }

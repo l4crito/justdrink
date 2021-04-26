@@ -8,6 +8,7 @@ import { HotkeyModule } from 'angular2-hotkeys';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 
+
 @NgModule({
   declarations: [
     AppComponent
@@ -24,7 +25,9 @@ import { environment } from '../environments/environment';
       registrationStrategy: 'registerWhenStable:30000'
     })
   ],
-  providers: [],
+  providers: [
+
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
