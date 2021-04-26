@@ -61,6 +61,7 @@ export class PlayersComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.playerProvider.verifyIfCanResume();
+    this.taskProvider.getTasks();
   }
 
   addPlayer() {

@@ -1,17 +1,17 @@
 import { Injectable } from '@angular/core';
-import { tasks } from 'src/app/mocks/tasks';
 import { TaskModel } from 'src/app/models/task.model';
 import { highlight } from 'src/app/utils/highlight.util';
+import { GoogleSheetService } from '../services/google-sheet.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TaskProvider {
 
-  tasks: TaskModel[] = tasks;
+  tasks: TaskModel[] = [];
   assignedTasks: TaskModel[] = [];
   currentTask: TaskModel | undefined | null;
-  constructor() { }
+  constructor(private googleService: GoogleSheetService) { }
 
   assignTask(): any {
     if (this.assignedTasks.length >= this.tasks.length) {
@@ -38,6 +38,35 @@ export class TaskProvider {
 
   removeTask(task: TaskModel) {
     this.tasks = this.tasks.filter(t => t.id !== task.id);
+  }
+
+  getTasks() {
+    this.googleService.getTasks().subscribe((res: any) => {
+      var lines = res.split("\n");
+
+      var result = [];
+
+      // NOTE: If your columns contain commas in their values, you'll need
+      // to deal with those before doing the next step 
+      // (you might convert them to &&& or something, then covert them back later)
+      // jsfiddle showing the issue https://jsfiddle.net/
+      var headers = lines[0].split(",");
+      for (var i = 1; i < lines.length; i++) {
+
+        var obj: any = {};
+        var currentline = lines[i].split(",");
+
+        for (var j = 0; j < headers.length; j++) {
+          obj[headers[j].trim()] = currentline[j].trim();
+        }
+        result.push(obj);
+      }
+
+      this.tasks = result.filter(t => t.id && t.reto).map(t => {
+        return { id: t.id, task: t.reto }
+      });
+      console.log("Retos", this.tasks.length)
+    });
   }
 
 }
