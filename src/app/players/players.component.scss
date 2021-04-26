@@ -43,7 +43,7 @@ app-player {
   width: 225px;
   height: 225px;
   border-radius: 0 0 0 225px;
-  
+
   .number {
     flex-direction: column;
     position: relative;
@@ -87,6 +87,7 @@ app-player {
     display: block;
   }
   .buttons {
+    position: relative;
     flex-direction: column;
     width: 100%;
     padding: 1rem 2rem;
@@ -97,6 +98,35 @@ app-player {
       border-radius: 40px;
       font-size: 1.2rem;
       margin: 0.5rem 0;
+    }
+
+    .dear {
+      position: absolute;
+      width: fit-content;
+      height: fit-content;
+      background-color: transparent;
+      right: 4rem;
+      top: 10px;
+      z-index: 3;
+      .dears{
+        display: none;
+      }
+      .number {
+        flex-direction: row;
+        position: static;
+        min-width: 60%;
+        width: fit-content;
+        height: 25px;
+        font-size: .8rem;
+        letter-spacing: 1px;
+        line-height: normal;
+        padding: 0 5px;
+        border-radius: 25px;
+        font-weight: 100;
+        span {
+          margin: 0 5px;
+        }
+      }
     }
   }
 }

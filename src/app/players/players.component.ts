@@ -48,13 +48,13 @@ export class PlayersComponent implements OnInit, OnDestroy {
       return false;
     }, ['input']));
     this.hotkeyService.add(new Hotkey(['right'], (event: KeyboardEvent): boolean => {
-      this.start();
+      this.resume();
       return false;
     }, ['input']));
   }
   ngOnDestroy(): void {
     this.hotkeyService.remove(new Hotkey(['right'], (event: KeyboardEvent): boolean => {
-      this.start();
+      this.resume();
       return false;
     }, ['input']));
   }
@@ -75,8 +75,7 @@ export class PlayersComponent implements OnInit, OnDestroy {
     this.play();
   }
   resume() {
-    this.play(true);
-
+    this.play(this.playerProvider.canResume);
   }
 
   play(resume = false) {
