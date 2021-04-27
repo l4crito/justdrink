@@ -57,6 +57,15 @@ export const zoomIn = trigger('zoomIn', [
         animate('300ms  ease-out', style({ transform: 'scale(0)' }))
     ])
 ]);
+export const zoomSlow = trigger('zoomSlow', [
+    transition(':enter', [
+        style({ transform: 'scale(0)' }),
+        animate('400ms  ease-out', style({ transform: 'scale(1)' })),
+    ]),
+    transition(':leave', [
+        animate('400ms  ease-out', style({ transform: 'scale(0)' }))
+    ])
+]);
 export const rotateLeft = trigger('rotateLeft', [
     transition(':enter', [
         style({ transform: 'rotate(90deg)' }),
@@ -118,7 +127,7 @@ export const stateUpdated = trigger('stateUpdated', [
 export const leftRightNumeric = trigger('leftRightNumeric', [
     transition(':increment', [
         animate('100ms', style({
-            transform: 'translateX(10%)',
+            transform: 'translateX(20%)',
         })),
         animate('100ms', style({
             transform: 'translateX(0)',
@@ -128,7 +137,7 @@ export const leftRightNumeric = trigger('leftRightNumeric', [
 
     transition(':decrement', [
         animate('100ms', style({
-            transform: 'translateX(-10%)',
+            transform: 'translateX(-20%)',
         })),
         animate('100ms', style({
             transform: 'translateX(0)',

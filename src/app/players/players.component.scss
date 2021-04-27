@@ -99,19 +99,23 @@ app-player {
 @media all and(max-width:800px) {
   .bg {
     justify-content: flex-start;
-    height: 95vh;
+    height: fit-content;
   }
 
   .types {
     position: static;
     height: fit-content;
-    min-height: 40vh;
+    justify-content: flex-start;
+    margin-bottom: 2rem;
+    width: 100%;
     .type {
+      border: none;
+      box-sizing: border-box;
       width: 100%;
       padding: 0 2.5rem;
       line-height: 2rem;
       font-size: 1rem;
-      margin: 0.5rem 0;
+      margin: 0.25rem 0;
       border-radius: 0;
       text-align: center;
     }
@@ -143,12 +147,13 @@ app-player {
 
   .players {
     width: 100%;
-    height: fit-content;
+    min-height: 50vh;
+    max-height: 80vh;
     padding: 0 1rem;
     margin: 0;
     overflow-y: auto;
     overflow-x: hidden;
-    height: 100%;
+    height: fit-content;
   }
 
   app-player {
@@ -193,6 +198,10 @@ app-player {
         font-weight: 100;
         span {
           margin: 0 5px;
+        }
+        div {
+          min-width: 50px;
+          text-align: center;
         }
       }
     }

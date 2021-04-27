@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { Router } from '@angular/router';
 import { Hotkey, HotkeysService } from 'angular2-hotkeys';
-import { apearAnimation, bottomToTopAnimation, leftToRight, rightToLeft, zoomIn, playerAnimation, leftRightNumeric } from '../animations';
+import { apearAnimation, bottomToTopAnimation, leftToRight, rightToLeft, zoomIn, zoomSlow, leftRightNumeric } from '../animations';
 import { PlayerModel, PlayerPosition } from '../models/player.model';
 import { TaskType } from '../models/task.model';
 import { PlayerProvider } from '../shared/provider/player.provider';
@@ -11,7 +11,7 @@ import { TaskProvider } from '../shared/provider/task.provider';
 import { TaskComponent } from './components/task/task.component';
 
 @Component({
-  animations: [apearAnimation, bottomToTopAnimation, leftToRight, zoomIn, rightToLeft, playerAnimation, leftRightNumeric],
+  animations: [apearAnimation, bottomToTopAnimation, leftToRight, zoomIn, rightToLeft, zoomSlow, leftRightNumeric],
   selector: 'app-players',
   templateUrl: './players.component.html',
   styleUrls: ['./players.component.scss']

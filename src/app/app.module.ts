@@ -8,6 +8,7 @@ import { HotkeyModule } from 'angular2-hotkeys';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { HttpClientModule } from '@angular/common/http';
+import { MaterialModule } from './material/material.module';
 
 
 @NgModule({
@@ -25,7 +26,8 @@ import { HttpClientModule } from '@angular/common/http';
       // or after 30 seconds (whichever comes first).
       registrationStrategy: 'registerWhenStable:30000'
     }),
-    HttpClientModule
+    HttpClientModule,
+    MaterialModule
   ],
   providers: [
 

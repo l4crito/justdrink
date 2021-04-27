@@ -12,7 +12,7 @@
             </button>
         </form>
     </mat-card>
-    <div class="players ">
+    <div class="players" @zoomSlow>
         <app-player [showDelete]="true" [player]="item" *ngFor="let item of playerProvider.players" @leftToRight>
         </app-player>
     </div>
@@ -20,7 +20,7 @@
 
         <div class="dear flex-center" *ngIf="taskProvider.taskPool.length &&this.taskProvider.animateBg" @rightToLeft>
             <div class="number flex-center" @zoomIn *ngIf="taskProvider.animateNumber">
-                <span [@leftRightNumeric]="taskProvider.tasks.length"> {{taskProvider.tasks.length}} </span>
+                <div [@leftRightNumeric]="taskProvider.tasks.length"> {{taskProvider.tasks.length}} </div>
                 <span class="dears"> Desafíos</span>
             </div>
         </div>
@@ -33,16 +33,14 @@
             CONTINUAR
         </button>
     </div>
-
-</div>
-
-<div class="types flex-center" @leftToRight *ngIf="taskProvider.taskPool.length &&this.taskProvider.animateBg">
-    <div class="type ns pointer"
-        [ngClass]="{'selected': playerProvider.types.normal.status,'unselected': !playerProvider.types.normal.status}"
-        mat-ripple (click)="toogeType(playerProvider.types.normal)">
-        Todo normal</div>
-    <div class="type ns pointer"
-        [ngClass]="{'selected': playerProvider.types.hot.status,'unselected': !playerProvider.types.hot.status}"
-        mat-ripple (click)="toogeType(playerProvider.types.hot)">
-        Sexosa la cosa</div>
+    <div class="types flex-center" @leftToRight>
+        <div class="type ns pointer"
+            [ngClass]="{'selected': playerProvider.types.normal.status,'unselected': !playerProvider.types.normal.status}"
+            mat-ripple (click)="toogeType(playerProvider.types.normal)">
+            Todo normal</div>
+        <div class="type ns pointer"
+            [ngClass]="{'selected': playerProvider.types.hot.status,'unselected': !playerProvider.types.hot.status}"
+            mat-ripple (click)="toogeType(playerProvider.types.hot)">
+            Sexosa la cosa</div>
+    </div>
 </div>
