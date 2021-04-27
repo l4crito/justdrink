@@ -44,8 +44,8 @@ export class PlayersComponent implements OnInit, OnDestroy {
       this.focusAddPlayer();
       return false;
     }));
-    this.hotkeyService.add(new Hotkey(['up'], (event: KeyboardEvent): boolean => {
-      this.addTask();
+    this.hotkeyService.add(new Hotkey(['down'], (event: KeyboardEvent): boolean => {
+      this.taskProvider.getTasks();
       return false;
     }, ['input']));
     this.hotkeyService.add(new Hotkey(['right'], (event: KeyboardEvent): boolean => {
@@ -56,6 +56,10 @@ export class PlayersComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.hotkeyService.remove(new Hotkey(['right'], (event: KeyboardEvent): boolean => {
       this.resume();
+      return false;
+    }, ['input']));
+    this.hotkeyService.remove(new Hotkey(['down'], (event: KeyboardEvent): boolean => {
+      this.taskProvider.getTasks();
       return false;
     }, ['input']));
   }

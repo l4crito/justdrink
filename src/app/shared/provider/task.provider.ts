@@ -1,4 +1,6 @@
 import { Injectable } from '@angular/core';
+import { Subject } from 'rxjs';
+import { debounceTime } from 'rxjs/operators';
 import { TaskModel, TaskType } from 'src/app/models/task.model';
 import { highlight } from 'src/app/utils/highlight.util';
 import { GoogleSheetService } from '../services/google-sheet.service';
@@ -15,9 +17,13 @@ export class TaskProvider {
   types: TaskType[] = [TaskType.NORMAL];
   animateBg = false;
   animateNumber = false;
+  task$ = new Subject<boolean>();
   constructor(private googleService: GoogleSheetService) {
     this.getPool()
     this.getTasks();
+    this.task$.pipe(
+      debounceTime(300)
+    ).subscribe(() => { this.fetchTasks(); })
   }
 
   assignTask(): any {
@@ -47,9 +53,23 @@ export class TaskProvider {
   }
 
   getTasks() {
+    this.task$.next(true);
+  }
+
+  fetchTasks() {
+    const lastUpdate = localStorage.getItem("lastUpdate");
+    if (lastUpdate) {
+      const currentDate = new Date();
+      const lastDate = new Date(lastUpdate);
+      let diff = (currentDate.getTime() - lastDate.getTime()) / 1000;
+      if (diff < 300) {
+        return;
+      }
+    }
+
+    localStorage.setItem("lastUpdate", new Date().toString());
     this.googleService.getTasks().subscribe((res: any) => {
       var lines = res.split("\r\n");
-
       var result = [];
       var headers = lines[0].split(",");
       for (var i = 1; i < lines.length; i++) {

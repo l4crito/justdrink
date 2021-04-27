@@ -75,10 +75,12 @@ export class PlayerProvider {
     this.taskProvider.currentTask = null;
     const index = Math.floor(Math.random() * this.players.length);
     this.currentPlayer = this.players[index];
-    this.nextPlayer();
+    this.nextPlayer(null);
   }
 
-  nextPlayer() {
+  nextPlayer(evt: any) {
+    evt?.preventDefault();
+    evt?.stopImmediatePropagation();
     this.nextPlayerSubject.next(true);
 
   }

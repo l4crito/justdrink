@@ -23,7 +23,7 @@ export class DrinkComponent implements OnInit, OnDestroy {
       this.playerProvider.start();
     }
     this.hotkeyService.add(new Hotkey(['enter', 'right'], (event: KeyboardEvent): boolean => {
-      this.playerProvider.nextPlayer();
+      this.playerProvider.nextPlayer(null);
       return false;
     }));
     this.hotkeyService.add(new Hotkey(['left'], (event: KeyboardEvent): boolean => {
@@ -37,7 +37,7 @@ export class DrinkComponent implements OnInit, OnDestroy {
   }
   ngOnDestroy(): void {
     this.hotkeyService.remove(new Hotkey(['enter', 'right'], (event: KeyboardEvent): boolean => {
-      this.playerProvider.nextPlayer();
+      this.playerProvider.nextPlayer(null);
       return false;
     }));
     this.hotkeyService.remove(new Hotkey(['left'], (event: KeyboardEvent): boolean => {
@@ -61,9 +61,9 @@ export class DrinkComponent implements OnInit, OnDestroy {
   onSwipe(evt: any) {
     console.log(evt)
     const x = Math.abs(evt.deltaX) > 40 ? (evt.deltaX > 0 ? 'r' : 'l') : '';
-    switch(x){
+    switch (x) {
       case 'r':
-        this.playerProvider.nextPlayer();
+        this.playerProvider.nextPlayer(null);
         break;
       case 'l':
         this.playerProvider.prevPlayer();

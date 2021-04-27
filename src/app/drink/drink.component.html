@@ -10,12 +10,12 @@
         </div>
     </div>
 
-    <div class="task flex-center" (swipe)="onSwipe($event)">
+    <div class="task flex-center pointer" (swipe)="onSwipe($event)" (click)="playerProvider.nextPlayer($event)" mat-ripple>
         <div *ngIf="taskProvider.currentTask?.task" @apearAnimation>
             {{taskProvider.currentTask?.task|firstCapital}}</div>
     </div>
 
-    <div class="next ns pointer mat-elevation-z3 flex-center" mat-ripple (click)="playerProvider.nextPlayer()"
+    <div class="next ns pointer mat-elevation-z3 flex-center" mat-ripple (click)="playerProvider.nextPlayer($event)"
         @rotateLeft>
         <mat-icon>navigate_next</mat-icon>
     </div>
