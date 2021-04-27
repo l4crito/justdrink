@@ -15,7 +15,10 @@ export class TaskProvider {
   types: TaskType[] = [TaskType.NORMAL];
   animateBg = false;
   animateNumber = false;
-  constructor(private googleService: GoogleSheetService) { }
+  constructor(private googleService: GoogleSheetService) {
+    this.getPool()
+    this.getTasks();
+  }
 
   assignTask(): any {
     if (this.assignedTasks.length >= this.tasks.length) {
@@ -31,12 +34,11 @@ export class TaskProvider {
     this.assignedTasks = this.assignedTasks.filter(t => t.id !== task?.id);
   }
   addTask(task: TaskModel) {
-    const taskPresent = this.tasks.find(taskInArray => taskInArray.id === task.id ||
-      task.task?.toLocaleLowerCase() === taskInArray.task?.toLocaleLowerCase());
+    const taskPresent = this.taskPool.find(taskInArray => taskInArray.id === task.id);
     if (taskPresent) {
-      highlight(taskPresent);
+      Object.assign(taskPresent, task);
     } else {
-      this.tasks.unshift(task);
+      this.taskPool.push(task);
     }
   }
 
@@ -49,11 +51,6 @@ export class TaskProvider {
       var lines = res.split("\r\n");
 
       var result = [];
-
-      // NOTE: If your columns contain commas in their values, you'll need
-      // to deal with those before doing the next step 
-      // (you might convert them to &&& or something, then covert them back later)
-      // jsfiddle showing the issue https://jsfiddle.net/
       var headers = lines[0].split(",");
       for (var i = 1; i < lines.length; i++) {
 
@@ -66,9 +63,11 @@ export class TaskProvider {
         result.push(obj);
       }
 
-      this.taskPool = result.filter(t => t.id && t.reto).map(t => {
+      const tasks: TaskModel[] = result.filter(t => t.id && t.reto).map(t => {
         return { id: t.id, task: t.reto, type: t.tipo }
       });
+      tasks.forEach(task => { this.addTask(task) });
+      this.storePool();
       this.animateDears();
       this.filterTasks();
     });
@@ -92,6 +91,18 @@ export class TaskProvider {
   removeType(type: TaskType) {
     this.types = this.types.filter(t => t !== type);
     this.filterTasks();
+  }
+
+  storePool() {
+    localStorage.setItem("tasks", JSON.stringify(this.taskPool));
+  }
+  getPool() {
+    const tasks = localStorage.getItem("tasks");
+    if (tasks) {
+      this.taskPool = JSON.parse(tasks);
+      this.filterTasks();
+      this.animateDears();
+    }
   }
 
 }

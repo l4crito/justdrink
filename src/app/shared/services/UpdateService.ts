@@ -25,22 +25,6 @@ export class UpdateService {
 
   }
 
-  verificarVersion() {
-    // if (CoreFunctions.actualizando) {
-    //   return;
-    // }
-    // CoreFunctions.actualizando = true;
-    // this.actions.loading('Actualizando');
-    // this.updates.checkForUpdate().then(() => {
-    //   this.actions.dismiss();
-    //   CoreFunctions.actualizando = false;
-    // }).catch(() => {
-    //   this.actions.dismiss();
-    //   CoreFunctions.actualizando = false;
-    // });
-  }
-
-
   update() {
     this.updates.activateUpdate();
   }
