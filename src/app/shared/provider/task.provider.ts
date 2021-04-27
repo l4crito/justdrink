@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { TaskModel } from 'src/app/models/task.model';
+import { TaskModel, TaskType } from 'src/app/models/task.model';
 import { highlight } from 'src/app/utils/highlight.util';
 import { GoogleSheetService } from '../services/google-sheet.service';
 
@@ -9,8 +9,10 @@ import { GoogleSheetService } from '../services/google-sheet.service';
 export class TaskProvider {
 
   tasks: TaskModel[] = [];
+  taskPool: TaskModel[] = [];
   assignedTasks: TaskModel[] = [];
   currentTask: TaskModel | undefined | null;
+  types: TaskType[] = [TaskType.NORMAL];
   animateBg = false;
   animateNumber = false;
   constructor(private googleService: GoogleSheetService) { }
@@ -64,18 +66,32 @@ export class TaskProvider {
         result.push(obj);
       }
 
-      this.tasks = result.filter(t => t.id && t.reto).map(t => {
-        return { id: t.id, task: t.reto }
+      this.taskPool = result.filter(t => t.id && t.reto).map(t => {
+        return { id: t.id, task: t.reto, type: t.tipo }
       });
-      this.animateDear();
+      this.animateDears();
+      this.filterTasks();
     });
   }
 
-  animateDear() {
+  filterTasks() {
+    this.tasks = this.taskPool.filter(task => this.types.find(type => task.type === type) ? true : false);
+  }
+  animateDears() {
     this.animateBg = true;
     setTimeout(() => {
       this.animateNumber = true;
     }, 500);
+  }
+
+  addType(type: TaskType) {
+    this.types.push(type);
+    this.filterTasks();
+  }
+
+  removeType(type: TaskType) {
+    this.types = this.types.filter(t => t !== type);
+    this.filterTasks();
   }
 
 }

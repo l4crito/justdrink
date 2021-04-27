@@ -18,9 +18,9 @@
     </div>
     <div class="flex-center buttons">
 
-        <div class="dear flex-center" *ngIf="taskProvider.tasks.length &&this.taskProvider.animateBg" @rightToLeft>
+        <div class="dear flex-center" *ngIf="taskProvider.taskPool.length &&this.taskProvider.animateBg" @rightToLeft>
             <div class="number flex-center" @zoomIn *ngIf="taskProvider.animateNumber">
-                <span> {{taskProvider.tasks.length}} </span>
+                <span [@leftRightNumeric]="taskProvider.tasks.length"> {{taskProvider.tasks.length}} </span>
                 <span class="dears"> Desafíos</span>
             </div>
         </div>
@@ -29,12 +29,20 @@
             EMPEZAR
         </button>
         <button color="warn" class="start button" mat-raised-button *ngIf="playerProvider.canResume" (click)="resume()"
-            @apearAnimation>
+            [disabled]="this.playerProvider.players.length < 2 || !this.taskProvider.tasks.length" @apearAnimation>
             CONTINUAR
         </button>
-
     </div>
 
+</div>
 
-
+<div class="types flex-center" @leftToRight *ngIf="taskProvider.taskPool.length &&this.taskProvider.animateBg">
+    <div class="type ns pointer"
+        [ngClass]="{'selected': playerProvider.types.normal.status,'unselected': !playerProvider.types.normal.status}"
+        mat-ripple (click)="toogeType(playerProvider.types.normal)">
+        Todo normal</div>
+    <div class="type ns pointer"
+        [ngClass]="{'selected': playerProvider.types.hot.status,'unselected': !playerProvider.types.hot.status}"
+        mat-ripple (click)="toogeType(playerProvider.types.hot)">
+        Sexosa la cosa</div>
 </div>

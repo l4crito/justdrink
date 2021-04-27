@@ -59,9 +59,77 @@ app-player {
     line-height: 1.2rem;
   }
 }
+
+.types {
+  position: fixed;
+  flex-direction: column;
+  height: 100vh;
+  left: 0;
+  top: 0;
+  z-index: 3;
+  .type {
+    min-width: 370px;
+    border: solid 2px tomato;
+    color: white;
+    transition: 300ms ease-in-out;
+    padding: 0 2.5rem;
+    line-height: 3.5rem;
+    border-top-right-radius: 3.5rem;
+    border-bottom-right-radius: 3.5rem;
+    font-size: 2rem;
+    margin: 0.5rem 0;
+  }
+}
+.selected {
+  background-color: tomato;
+  transform: translateX(-3px);
+  &:hover {
+    background-color: tomato;
+    transform: translateX(-3px);
+  }
+}
+.unselected {
+  background-color: transparent;
+  transform: translateX(-20px);
+
+  &:hover {
+    background-color: rgba(255, 99, 71, 0.397);
+  }
+}
 @media all and(max-width:800px) {
   .bg {
     justify-content: flex-start;
+    height: 95vh;
+  }
+
+  .types {
+    position: static;
+    height: fit-content;
+    min-height: 40vh;
+    .type {
+      width: 100%;
+      padding: 0 2.5rem;
+      line-height: 2rem;
+      font-size: 1rem;
+      margin: 0.5rem 0;
+      border-radius: 0;
+      text-align: center;
+    }
+  }
+
+  .selected {
+    transform: translateX(0);
+    &:hover {
+      transform: translateX(0);
+    }
+  }
+  .unselected {
+    background-color: transparent;
+    transform: translateX(0);
+
+    &:hover {
+      background-color: transparent;
+    }
   }
   mat-card {
     margin: 0;
@@ -108,7 +176,7 @@ app-player {
       right: 4rem;
       top: 10px;
       z-index: 3;
-      .dears{
+      .dears {
         display: none;
       }
       .number {
@@ -117,7 +185,7 @@ app-player {
         min-width: 60%;
         width: fit-content;
         height: 25px;
-        font-size: .8rem;
+        font-size: 0.8rem;
         letter-spacing: 1px;
         line-height: normal;
         padding: 0 5px;

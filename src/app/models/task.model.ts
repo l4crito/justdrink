@@ -1,10 +1,11 @@
 export interface TaskModel {
     id: any;
     task?: string;
-    type?: TaskType[];
+    type?: TaskType;
     highlight?: boolean;
 }
 
 export enum TaskType {
-    DRINK = 'DRINK',
+    NORMAL = 'n',
+    HOT = 's',
 }

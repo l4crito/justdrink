@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Subject, Subscription } from 'rxjs';
 import { PlayerModel, PlayerPosition } from 'src/app/models/player.model';
-import { TaskModel } from 'src/app/models/task.model';
+import { TaskModel, TaskType } from 'src/app/models/task.model';
 import { highlight } from 'src/app/utils/highlight.util';
 import { TaskProvider } from './task.provider';
 import { debounceTime } from 'rxjs/operators';
@@ -29,6 +29,10 @@ export class PlayerProvider {
   prevPlayerSubject = new Subject<boolean>();
   prevPlayerSubscription?: Subscription;
   nextPlayerSubscription?: Subscription;
+  types = {
+    normal: { type: TaskType.NORMAL, status: true },
+    hot: { type: TaskType.HOT, status: false },
+  };
   constructor(private taskProvider: TaskProvider) {
     this.nextPlayerSubscription = this.nextPlayerSubject.pipe(
       debounceTime(200)
