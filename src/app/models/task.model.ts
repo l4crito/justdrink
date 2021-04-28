@@ -1,6 +1,7 @@
 export interface TaskModel {
     id: any;
     task?: string;
+    taskToPlay?: string;
     type?: TaskType;
     highlight?: boolean;
 }

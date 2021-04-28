@@ -2,14 +2,14 @@ import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 import { TaskModel, TaskType } from 'src/app/models/task.model';
-import { highlight } from 'src/app/utils/highlight.util';
+import { environment } from 'src/environments/environment';
 import { GoogleSheetService } from '../services/google-sheet.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TaskProvider {
-
+  others = false;
   tasks: TaskModel[] = [];
   taskPool: TaskModel[] = [];
   assignedTasks: TaskModel[] = [];
@@ -57,13 +57,15 @@ export class TaskProvider {
   }
 
   fetchTasks() {
-    const lastUpdate = localStorage.getItem("lastUpdate");
-    if (lastUpdate) {
-      const currentDate = new Date();
-      const lastDate = new Date(lastUpdate);
-      let diff = (currentDate.getTime() - lastDate.getTime()) / 1000;
-      if (diff < 300) {
-        return;
+    if (environment.production) {
+      const lastUpdate = localStorage.getItem("lastUpdate");
+      if (lastUpdate) {
+        const currentDate = new Date();
+        const lastDate = new Date(lastUpdate);
+        let diff = (currentDate.getTime() - lastDate.getTime()) / 1000;
+        if (diff < 300) {
+          return;
+        }
       }
     }
 
@@ -93,8 +95,11 @@ export class TaskProvider {
     });
   }
 
-  filterTasks() {
+  async filterTasks() {
     this.tasks = this.taskPool.filter(task => this.types.find(type => task.type === type) ? true : false);
+    if (!this.others) {
+      this.tasks = this.tasks.filter(task => !task.task?.includes('(o)'));
+    }
   }
   animateDears() {
     this.animateBg = true;

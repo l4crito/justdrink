@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { PlayerModel } from 'src/app/models/player.model';
 import { PlayerProvider } from 'src/app/shared/provider/player.provider';
+import { TaskProvider } from 'src/app/shared/provider/task.provider';
 import { leftToRight } from '../../../animations';
 
 @Component({
@@ -16,5 +17,7 @@ export class PlayerComponent implements OnInit {
 
   ngOnInit(): void {
   }
+
+
 
 }

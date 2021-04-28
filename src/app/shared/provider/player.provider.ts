@@ -12,14 +12,7 @@ import { debounceTime } from 'rxjs/operators';
 export class PlayerProvider {
   resume = false;
   canResume = false;
-  players: PlayerModel[] = [
-    // { name: 'CARITO', position: PlayerPosition.LEFT },
-    // { name: 'ISABRU', position: PlayerPosition.LEFT },
-    // { name: 'LUCERO', position: PlayerPosition.LEFT },
-    // { name: 'CHRISTIAN', position: PlayerPosition.LEFT },
-    // { name: 'DIEGO', position: PlayerPosition.LEFT },
-    // { name: 'DIANA', position: PlayerPosition.LEFT },
-  ];
+  players: PlayerModel[] = [];
   current = 0;
   currentPlayer!: PlayerModel | null;
   nextTimer: any = null;
@@ -52,6 +45,7 @@ export class PlayerProvider {
       highlight(playerPresent);
     } else {
       this.players.unshift(player);
+      this.toogleGender();
     }
   }
   removePlayer(player: PlayerModel, evt: any) {
@@ -109,7 +103,8 @@ export class PlayerProvider {
           this.currentPlayer.position = PlayerPosition.MIDDLE;
           this.playerTasks.push({ player: this.currentPlayer });
           setTimeout(() => {
-            const task = this.taskProvider.assignTask();
+            const task: TaskModel = this.taskProvider.assignTask();
+            this.verifyTask(task);
             const lastTask = this.lastAssignedTask();
             this.taskProvider.currentTask = task;
             if (lastTask) {
@@ -170,14 +165,39 @@ export class PlayerProvider {
     this.verifyIfCanResume();
   }
 
-  getOpositGenderPlayer() {
-    const otherPlayers = this.players.filter(player => player.name !== this.currentPlayer?.name &&
-      player.gender !== this.currentPlayer?.gender)
+  verifyTask(task: TaskModel) {
+    if (task.task?.includes('(o)')) {
+      task.taskToPlay = JSON.parse(JSON.stringify(task.task?.replace('(o)', this.getOtherPlayer()?.name || '')));
+    } else
+      if (task.task?.includes('(r)')) {
+        task.taskToPlay = JSON.parse(JSON.stringify(task.task?.replace('(r)', this.getRandomPlayer()?.name || '')))
+      } else {
+        task.taskToPlay = task.task;
+      }
+
+  }
+
+  getOtherPlayer() {
+    const otherPlayers = this.players.filter(player => !(player.name === this.currentPlayer?.name &&
+      player.gender === this.currentPlayer?.gender))
     return otherPlayers.length ? otherPlayers[Math.floor(Math.random() * otherPlayers.length)] : null;
   }
   getRandomPlayer() {
-    const otherPlayers = this.players.filter(player => player.name !== this.currentPlayer?.name)
-    return otherPlayers.length ? otherPlayers[Math.floor(Math.random() * otherPlayers.length)] : null;
+    const anyPlayer = this.players.filter(player => player.name !== this.currentPlayer?.name)
+    return anyPlayer.length ? anyPlayer[Math.floor(Math.random() * anyPlayer.length)] : null;
+  }
+
+  toogleGender(player?: PlayerModel) {
+    if (player) {
+      player.female = !player.female;
+    }
+    const female = this.players.filter(player => player.female).length;
+    const male = this.players.length - female;
+    const others = female > 0 && male > 0;
+    if (others !== this.taskProvider.others) {
+      this.taskProvider.others = others;
+      this.taskProvider.filterTasks();
+    }
   }
 
 }

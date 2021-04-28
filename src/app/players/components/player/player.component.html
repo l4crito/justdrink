@@ -1,6 +1,6 @@
 <div class="line flex-between player ns"
     [ngClass]="{'highlight': player.highlight,'male': !player.female,'female': player.female}"
-    (click)="player.female=!player.female" mat-ripple>
+    (click)="this.playerProvider.toogleGender(player)" mat-ripple>
     <div class="flex-start">
         <mat-icon>{{player.female?'female':'male'}}</mat-icon>
         <mat-label>
