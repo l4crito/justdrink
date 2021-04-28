@@ -3,8 +3,20 @@
   font-size: 1.2rem;
 }
 
+.male {
+  color: #02a3fe;
+}
+.female {
+  color: #eb49a6;
+}
+.flex-start {
+  mat-icon {
+    margin-right: 1rem;
+  }
+}
+
 @media all and(max-width:800px) {
-  .player{
-    font-size: .9rem;
+  .player {
+    font-size: 0.9rem;
   }
 }

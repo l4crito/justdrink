@@ -54,7 +54,9 @@ export class PlayerProvider {
       this.players.unshift(player);
     }
   }
-  removePlayer(player: PlayerModel) {
+  removePlayer(player: PlayerModel, evt: any) {
+    evt?.preventDefault();
+    evt?.stopImmediatePropagation();
     this.players = this.players.filter(pla => pla.name !== player.name);
     this.playerTasks = this.playerTasks.filter(playerTask => playerTask.player.name !== player.name);
     this.deletePlayerTasks(player);
@@ -167,4 +169,15 @@ export class PlayerProvider {
     this.playerTasks = this.playerTasks.filter(playerTask => playerTask.player.name !== player.name);
     this.verifyIfCanResume();
   }
+
+  getOpositGenderPlayer() {
+    const otherPlayers = this.players.filter(player => player.name !== this.currentPlayer?.name &&
+      player.gender !== this.currentPlayer?.gender)
+    return otherPlayers.length ? otherPlayers[Math.floor(Math.random() * otherPlayers.length)] : null;
+  }
+  getRandomPlayer() {
+    const otherPlayers = this.players.filter(player => player.name !== this.currentPlayer?.name)
+    return otherPlayers.length ? otherPlayers[Math.floor(Math.random() * otherPlayers.length)] : null;
+  }
+
 }

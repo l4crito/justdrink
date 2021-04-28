@@ -20,10 +20,10 @@ export class TaskProvider {
   task$ = new Subject<boolean>();
   constructor(private googleService: GoogleSheetService) {
     this.getPool()
-    this.getTasks();
     this.task$.pipe(
       debounceTime(300)
     ).subscribe(() => { this.fetchTasks(); })
+    this.getTasks();
   }
 
   assignTask(): any {

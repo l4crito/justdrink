@@ -1,6 +1,13 @@
-<div class="line flex-between player ns" [ngClass]="{'highlight': player.highlight}">
-    <mat-label> {{player.name}} </mat-label>
-    <button mat-icon-button (click)="playerProvider.removePlayer(player)"*ngIf="showDelete">
+<div class="line flex-between player ns"
+    [ngClass]="{'highlight': player.highlight,'male': !player.female,'female': player.female}"
+    (click)="player.female=!player.female" mat-ripple>
+    <div class="flex-start">
+        <mat-icon>{{player.female?'female':'male'}}</mat-icon>
+        <mat-label>
+            {{player.name}}
+        </mat-label>
+    </div>
+    <button mat-icon-button (click)="playerProvider.removePlayer(player,$event)" *ngIf="showDelete">
         <mat-icon>remove_circle_outline</mat-icon>
     </button>
 </div>

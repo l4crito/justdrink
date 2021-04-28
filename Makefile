@@ -17,7 +17,7 @@ install:
 	yarn install;
 
 run:
-	sudo ng serve --watch --poll 2000 --hmr --o;
+	sudo ng serve --watch --poll 2000 --hmr --host 0.0.0.0;
 
 pid:
 	sudo lsof -i :$(port)

@@ -7,6 +7,8 @@ export interface PlayerModel {
     like?: Gender;
     highlight?: boolean;
     position: PlayerPosition;
+    female?: boolean;
+
 }
 
 export enum Gender {
