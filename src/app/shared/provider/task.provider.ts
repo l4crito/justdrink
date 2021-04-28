@@ -57,7 +57,7 @@ export class TaskProvider {
   }
 
   fetchTasks() {
-    if (environment.production) {
+    if (environment.production && this.taskPool.length) {
       const lastUpdate = localStorage.getItem("lastUpdate");
       if (lastUpdate) {
         const currentDate = new Date();
@@ -67,17 +67,17 @@ export class TaskProvider {
           return;
         }
       }
+      localStorage.setItem("lastUpdate", new Date().toString());
     }
 
-    localStorage.setItem("lastUpdate", new Date().toString());
     this.googleService.getTasks().subscribe((res: any) => {
       var lines = res.split("\r\n");
       var result = [];
-      var headers = lines[0].split(",");
+      var headers = lines[0].split("\t");
       for (var i = 1; i < lines.length; i++) {
 
         var obj: any = {};
-        var currentline = lines[i].split(",");
+        var currentline = lines[i].split("\t");
 
         for (var j = 0; j < headers.length; j++) {
           obj[headers[j].trim()] = currentline[j].trim();
@@ -88,7 +88,7 @@ export class TaskProvider {
       const tasks: TaskModel[] = result.filter(t => t.id && t.reto).map(t => {
         return { id: t.id, task: t.reto, type: t.tipo }
       });
-      tasks.forEach(task => { this.addTask(task) });
+      this.taskPool = tasks;
       this.storePool();
       this.animateDears();
       this.filterTasks();

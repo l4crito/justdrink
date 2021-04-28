@@ -12,7 +12,7 @@ export class GoogleSheetService {
 
   public getTasks(): Observable<any> {
     const url =
-      `https://docs.google.com/spreadsheets/d/e/2PACX-1vTTW0xKXaa2ntkxNOlSiAKOvJ7fzJq0euYtCENaeG8rbkj_YCZHKbihlaZqNGhpDw/pub?output=csv`;
+      `https://docs.google.com/spreadsheets/d/e/2PACX-1vTTW0xKXaa2ntkxNOlSiAKOvJ7fzJq0euYtCENaeG8rbkj_YCZHKbihlaZqNGhpDw/pub?output=tsv`;
     return this.http.get(url, { responseType: 'text' as any });
   }
 }
