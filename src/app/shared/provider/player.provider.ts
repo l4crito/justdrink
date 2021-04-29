@@ -40,6 +40,8 @@ export class PlayerProvider {
   }
 
   addPlayer(player: PlayerModel) {
+    player.name = player.name?.trim().toUpperCase();
+    player.female = false;
     const playerPresent = this.players.find(pla => pla.name === player.name);
     if (playerPresent) {
       highlight(playerPresent);
@@ -169,8 +171,8 @@ export class PlayerProvider {
     if (task.task?.includes('(o)')) {
       task.taskToPlay = JSON.parse(JSON.stringify(task.task?.replace('(o)', this.getOtherPlayer()?.name || '')));
     } else
-      if (task.task?.includes('(r)')) {
-        task.taskToPlay = JSON.parse(JSON.stringify(task.task?.replace('(r)', this.getRandomPlayer()?.name || '')))
+      if (task.task?.includes('(a)')) {
+        task.taskToPlay = JSON.parse(JSON.stringify(task.task?.replace('(a)', this.getRandomPlayer()?.name || '')))
       } else {
         task.taskToPlay = task.task;
       }
@@ -178,8 +180,9 @@ export class PlayerProvider {
   }
 
   getOtherPlayer() {
-    const otherPlayers = this.players.filter(player => !(player.name === this.currentPlayer?.name &&
-      player.gender === this.currentPlayer?.gender))
+    const otherPlayers = this.players
+      .filter(player => player.female !== this.currentPlayer?.female)
+      .filter(player => player.name !== this.currentPlayer?.name)
     return otherPlayers.length ? otherPlayers[Math.floor(Math.random() * otherPlayers.length)] : null;
   }
   getRandomPlayer() {
