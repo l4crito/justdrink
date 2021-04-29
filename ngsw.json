@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1619659661981,
+  "timestamp": 1619738267181,
   "index": "/justdrink/index.html",
   "assetGroups": [
     {
@@ -66,7 +66,7 @@
     "/justdrink/icon.png": "e2e70feef9fe22c2afb4dc93ed409b0531f9ad05",
     "/justdrink/index.html": "08d1683e235aaf491fa51b5a475f902e4f13b797",
     "/justdrink/main.1a75343a5381edd65ec1.js": "b7f64319f68ce7f60fd61036e4f72b991ea3721a",
-    "/justdrink/manifest.webmanifest": "48e7071d8f2b99dca59602a31801658b442b5d31",
+    "/justdrink/manifest.webmanifest": "2e2c4cbf1b56b527c633908304541306c9d645f5",
     "/justdrink/polyfills.3544d9cb241a5eeaae74.js": "506855517e1835c4f3db5c7d25569b95bee71560",
     "/justdrink/runtime.d3ce97c10311983ea58c.js": "e30f98445b645e2180f96a1cd5fb65b712d91a62",
     "/justdrink/styles.ddaf2fa94269d4144836.css": "37863ddea0eebf5ac38c8203cf3398d9b80288a0"
