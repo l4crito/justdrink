@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1619643849669,
+  "timestamp": 1619659661981,
   "index": "/justdrink/index.html",
   "assetGroups": [
     {
@@ -16,7 +16,7 @@
         "/justdrink/6.f3b87381051b71965acb.js",
         "/justdrink/favicon.ico",
         "/justdrink/index.html",
-        "/justdrink/main.6607d9c3875871076a90.js",
+        "/justdrink/main.1a75343a5381edd65ec1.js",
         "/justdrink/manifest.webmanifest",
         "/justdrink/polyfills.3544d9cb241a5eeaae74.js",
         "/justdrink/runtime.d3ce97c10311983ea58c.js",
@@ -64,8 +64,8 @@
     "/justdrink/assets/icons/icon-96x96.png": "8905e214a500430796d8c0b784d74cec2f6448c4",
     "/justdrink/favicon.ico": "22f6a4a3bcaafafb0254e0f2fa4ceb89e505e8b2",
     "/justdrink/icon.png": "e2e70feef9fe22c2afb4dc93ed409b0531f9ad05",
-    "/justdrink/index.html": "51f4371cf223075a8363c9bf89e6fd12c4d127c0",
-    "/justdrink/main.6607d9c3875871076a90.js": "1fcb18444eef3460803d14ee1c1fab55bf3808d2",
+    "/justdrink/index.html": "08d1683e235aaf491fa51b5a475f902e4f13b797",
+    "/justdrink/main.1a75343a5381edd65ec1.js": "b7f64319f68ce7f60fd61036e4f72b991ea3721a",
     "/justdrink/manifest.webmanifest": "48e7071d8f2b99dca59602a31801658b442b5d31",
     "/justdrink/polyfills.3544d9cb241a5eeaae74.js": "506855517e1835c4f3db5c7d25569b95bee71560",
     "/justdrink/runtime.d3ce97c10311983ea58c.js": "e30f98445b645e2180f96a1cd5fb65b712d91a62",
