@@ -10,14 +10,13 @@
         </div>
     </div>
 
-    <div class="task flex-center pointer" (swipe)="onSwipe($event)" (click)="playerProvider.nextPlayer($event)"
-        mat-ripple>
+    <div class="task flex-center pointer" (click)="playerProvider.nextPlayer($event)" mat-ripple>
         <div *ngIf="taskProvider.currentTask?.task" @apearAnimation>
             {{taskProvider.currentTask?.taskToPlay|firstCapital}}</div>
     </div>
 
     <div class="next ns pointer mat-elevation-z3 flex-center" mat-ripple (click)="playerProvider.nextPlayer($event)"
-        @rotateLeft>
+        @rotateLeft matTooltip="Ronda: {{taskProvider.round}}">
         <mat-icon>navigate_next</mat-icon>
     </div>
 </div>

@@ -18,7 +18,7 @@ export class TaskProvider {
   animateBg = false;
   animateNumber = false;
   task$ = new Subject<boolean>();
-  round = 1;
+  round = 0;
   constructor(private googleService: GoogleSheetService) {
     this.getPool()
     this.task$.pipe(
@@ -90,7 +90,7 @@ export class TaskProvider {
       }
 
       const tasks: TaskModel[] = result.filter(t => t.id && t.reto).map(t => {
-        return { id: t.id, task: t.reto, type: t.tipo, round: t.ronda ? t.ronda : 1 }
+        return { id: t.id, task: t.reto, type: t.tipo, round: t.ronda ? t.ronda : -1 }
       });
       this.taskPool = tasks;
       this.storePool();

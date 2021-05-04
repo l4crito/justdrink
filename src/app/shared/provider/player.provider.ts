@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Subject, Subscription } from 'rxjs';
+import { BehaviorSubject, Subject, Subscription } from 'rxjs';
 import { PlayerModel, PlayerPosition } from 'src/app/models/player.model';
 import { TaskModel, TaskType } from 'src/app/models/task.model';
 import { highlight } from 'src/app/utils/highlight.util';
@@ -28,15 +28,15 @@ export class PlayerProvider {
   };
   firstPlayer = 0;
   constructor(private taskProvider: TaskProvider) {
-    this.nextPlayerSubscription = this.nextPlayerSubject.pipe(
-      debounceTime(200)
-    ).subscribe(() => {
-      this.findNextPlayer();
-    })
     this.prevPlayerSubscription = this.prevPlayerSubject.pipe(
       debounceTime(200)
     ).subscribe(() => {
       this.findPrevPlayer();
+    })
+    this.nextPlayerSubscription = this.nextPlayerSubject.pipe(
+      debounceTime(200)
+    ).subscribe(() => {
+      this.findNextPlayer();
     })
   }
 
@@ -75,6 +75,7 @@ export class PlayerProvider {
     const index = Math.floor(Math.random() * (this.players.length - 1));
     this.firstPlayer = (index + 1);
     this.currentPlayer = this.players[index];
+    this.taskProvider.round = 1;
     this.nextPlayer(null);
   }
 
@@ -124,35 +125,37 @@ export class PlayerProvider {
     }, 280);
   }
   findPrevPlayer() {
-    if (this.playerTasks.length > 1) {
-      const popedTask = this.playerTasks.pop();
-      this.taskProvider.removeAsignedTask(popedTask?.task);
-    } else {
-      highlight(this.playerTasks[0]?.player)
-      return;
-    }
-    const lastTask = this.lastAssignedTask();
-    if (lastTask) {
-      this.taskProvider.currentTask = null;
-      if (this.currentPlayer) {
-        this.currentPlayer.position = PlayerPosition.LEFT;
-      }
-      setTimeout(() => {
-        lastTask.player.position = PlayerPosition.RIGHT;
-        this.currentPlayer = lastTask.player;
-        setTimeout(() => {
-          lastTask.player.position = PlayerPosition.MIDDLE;
-          this.current = this.playerIndex(lastTask.player);
-          if (this.current === this.firstPlayer) {
-            this.taskProvider.round--;
-          }
-          setTimeout(() => {
-            this.taskProvider.currentTask = lastTask.task;
-          }, 500);
-        }, 280);
-      }, 280);
+    // if (this.playerTasks.length > 1) {
+    //   const popedTask = this.playerTasks.pop();
+    //   this.taskProvider.removeAsignedTask(popedTask?.task);
+    // } else {
+    //   highlight(this.playerTasks[0]?.player)
+    //   return;
+    // }
+    // const lastTask = this.lastAssignedTask();
+    // if (lastTask) {
+    //   this.taskProvider.currentTask = null;
+    //   if (this.currentPlayer) {
+    //     this.currentPlayer.position = PlayerPosition.LEFT;
+    //   }
+    //   setTimeout(() => {
+    //     lastTask.player.position = PlayerPosition.RIGHT;
+    //     this.currentPlayer = lastTask.player;
+    //     setTimeout(() => {
+    //       lastTask.player.position = PlayerPosition.MIDDLE;
+    //       this.current = this.playerIndex(lastTask.player);
+    //       let before = (this.current - 1)
+    //       before = before < 0 ? (this.players.length - 1) : before;
+    //       if (before === this.firstPlayer) {
+    //         this.taskProvider.round--;
+    //       }
+    //       setTimeout(() => {
+    //         this.taskProvider.currentTask = lastTask.task;
+    //       }, 500);
+    //     }, 280);
+    //   }, 280);
 
-    }
+    // }
   }
 
 
