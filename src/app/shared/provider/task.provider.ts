@@ -18,6 +18,7 @@ export class TaskProvider {
   animateBg = false;
   animateNumber = false;
   task$ = new Subject<boolean>();
+  round = 1;
   constructor(private googleService: GoogleSheetService) {
     this.getPool()
     this.task$.pipe(
@@ -29,8 +30,11 @@ export class TaskProvider {
   assignTask(): any {
     if (this.assignedTasks.length >= this.tasks.length) {
       this.assignedTasks = [];
+      this.round++;
     }
-    const unasignedTasks = this.tasks.filter(task => !this.assignedTasks.find(at => task.id === at.id));
+    const unasignedTasks = this.tasks
+      .filter(task => !this.assignedTasks.find(at => task.id === at.id))
+      .filter(task => this.round >= (task.round ? task.round : 1));
     const index = Math.floor(Math.random() * unasignedTasks.length);
     const task = unasignedTasks[index];
     this.assignedTasks.push(task);
@@ -86,7 +90,7 @@ export class TaskProvider {
       }
 
       const tasks: TaskModel[] = result.filter(t => t.id && t.reto).map(t => {
-        return { id: t.id, task: t.reto, type: t.tipo }
+        return { id: t.id, task: t.reto, type: t.tipo, round: t.ronda ? t.ronda : 1 }
       });
       this.taskPool = tasks;
       this.storePool();

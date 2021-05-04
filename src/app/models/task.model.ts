@@ -4,6 +4,7 @@ export interface TaskModel {
     taskToPlay?: string;
     type?: TaskType;
     highlight?: boolean;
+    round?: number;
 }
 
 export enum TaskType {

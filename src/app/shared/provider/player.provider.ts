@@ -26,6 +26,7 @@ export class PlayerProvider {
     normal: { type: TaskType.NORMAL, status: true },
     hot: { type: TaskType.HOT, status: false },
   };
+  firstPlayer = 0;
   constructor(private taskProvider: TaskProvider) {
     this.nextPlayerSubscription = this.nextPlayerSubject.pipe(
       debounceTime(200)
@@ -71,7 +72,8 @@ export class PlayerProvider {
   start() {
     this.currentPlayer = null;
     this.taskProvider.currentTask = null;
-    const index = Math.floor(Math.random() * this.players.length);
+    const index = Math.floor(Math.random() * (this.players.length - 1));
+    this.firstPlayer = (index + 1);
     this.currentPlayer = this.players[index];
     this.nextPlayer(null);
   }
@@ -98,6 +100,9 @@ export class PlayerProvider {
       this.current++;
       if (this.current + 1 > this.players.length) {
         this.current = 0;
+      }
+      if (this.current === this.firstPlayer) {
+        this.taskProvider.round++;
       }
       this.currentPlayer = this.players[this.current];
       setTimeout(() => {
@@ -138,6 +143,9 @@ export class PlayerProvider {
         setTimeout(() => {
           lastTask.player.position = PlayerPosition.MIDDLE;
           this.current = this.playerIndex(lastTask.player);
+          if (this.current === this.firstPlayer) {
+            this.taskProvider.round--;
+          }
           setTimeout(() => {
             this.taskProvider.currentTask = lastTask.task;
           }, 500);

@@ -10,7 +10,7 @@ export class HighlightDirective implements OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
     if (this.appHighlight) {
       this.el.nativeElement.style.transition = '300ms';
-      this.el.nativeElement.style.color = 'tomato';
+      this.el.nativeElement.style.color = '#f44336';
     } else {
       this.el.nativeElement.style.color = 'white';
 

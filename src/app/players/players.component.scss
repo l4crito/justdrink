@@ -47,7 +47,7 @@ app-player {
   .number {
     flex-direction: column;
     position: relative;
-    background-color: tomato;
+    background-color: #f44336;
     color: white;
     width: 150px;
     height: 150px;
@@ -69,7 +69,7 @@ app-player {
   z-index: 3;
   .type {
     min-width: 370px;
-    border: solid 2px tomato;
+    border: solid 2px #f44336;
     color: white;
     transition: 300ms ease-in-out;
     padding: 0 2.5rem;
@@ -81,10 +81,10 @@ app-player {
   }
 }
 .selected {
-  background-color: tomato;
+  background-color: #f44336;
   transform: translateX(-3px);
   &:hover {
-    background-color: tomato;
+    background-color: #f44336;
     transform: translateX(-3px);
   }
 }
