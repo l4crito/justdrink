@@ -28,18 +28,20 @@ export class PlayerProvider {
   firstPlayer = 0;
   assigningPlayer = false;
   constructor(public taskProvider: TaskProvider) {
-
-    let round = getItem(Names.ROUND);
-    round = round ? Number(round) : 0;
-    if (round) {
-      this.taskProvider.round = round;
-      this.players = getItem(Names.PLAYERS);
-      this.taskProvider.currentTask = getItem(Names.CURRENT_TASK);
-      this.taskProvider.assignedTasks = getItem(Names.ASSIGNED_TASKS);
-      this.currentPlayer = getItem(Names.CURRENT_PLAYER);
-      this.current = this.playerIndex(this.currentPlayer);
-      this.resume = true;
+    if (taskProvider.getTimeDifference(Names.LAST_START) < taskProvider.day) {
+      let round = getItem(Names.ROUND);
+      round = round ? Number(round) : 0;
+      if (round) {
+        this.taskProvider.round = round;
+        this.players = getItem(Names.PLAYERS);
+        this.taskProvider.currentTask = getItem(Names.CURRENT_TASK);
+        this.taskProvider.assignedTasks = getItem(Names.ASSIGNED_TASKS);
+        this.currentPlayer = getItem(Names.CURRENT_PLAYER);
+        this.current = this.playerIndex(this.currentPlayer);
+        this.resume = true;
+      }
     }
+
 
     this.nextPlayerSubscription = this.nextPlayerSubject.pipe(
       debounceTime(200)
@@ -80,7 +82,9 @@ export class PlayerProvider {
   }
 
   start() {
+    localStorage.setItem(Names.LAST_START, new Date().toString());
     this.players.forEach(player => player.position = PlayerPosition.LEFT);
+    this.taskProvider.assignedTasks = [];
     this.currentPlayer = null;
     this.taskProvider.currentTask = null;
     const index = Math.floor(Math.random() * (this.players.length - 1));

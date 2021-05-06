@@ -20,6 +20,7 @@ export class TaskProvider {
   animateNumber = false;
   task$ = new Subject<boolean>();
   round$ = new BehaviorSubject<number>(0);
+  day = 3600 * 24;
   constructor(private googleService: GoogleSheetService) {
     this.getPool()
     this.task$.pipe(
@@ -72,18 +73,11 @@ export class TaskProvider {
 
   fetchTasks() {
     if (environment.production && this.taskPool.length) {
-      const lastUpdate = localStorage.getItem("lastUpdate");
-      if (lastUpdate) {
-        const currentDate = new Date();
-        const lastDate = new Date(lastUpdate);
-        let diff = (currentDate.getTime() - lastDate.getTime()) / 1000;
-        if (diff < 120) {
-          return;
-        }
+      if (this.getTimeDifference() < 180) {
+        return;
       }
-      localStorage.setItem(Names.LAST_UPDATE, new Date().toString());
     }
-
+    localStorage.setItem(Names.LAST_UPDATE, new Date().toString());
     this.googleService.getTasks().subscribe((res: any) => {
       var lines = res.split("\r\n");
       var result = [];
@@ -145,6 +139,17 @@ export class TaskProvider {
 
     const assignedTasks = getItem(Names.TASKS);
     this.assignedTasks = assignedTasks ? assignedTasks : [];
+  }
+
+  getTimeDifference(action: Names = Names.LAST_UPDATE) {
+    const lastUpdate = localStorage.getItem(action);
+    if (lastUpdate) {
+      const currentDate = new Date();
+      const lastDate = new Date(lastUpdate);
+      const diff = (currentDate.getTime() - lastDate.getTime()) / 1000;
+      return diff;
+    }
+    return 5 * this.day;
   }
 
 }

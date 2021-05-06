@@ -14,6 +14,7 @@ export function getItem(name: string): any {
 
 export enum Names {
     LAST_UPDATE = 'LAST_UPDATE',
+    LAST_START = 'LAST_START',
     PLAYERS = 'PLAYERS',
     TASKS = 'TASKS',
     CURRENT_PLAYER = 'CURRENT_PLAYER',
