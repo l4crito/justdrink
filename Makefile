@@ -35,6 +35,8 @@ docker-run:
 	docker container run --publish 9002:8080 --detach --name ca cloudadmin:1.0
 scss:
 	sass --watch src/assets/themes/:src/assets/themes/
+pwa-icons: #Create an icon.png file in the root folder of your Angular project.
+	ngx-pwa-icons
 
 
 
