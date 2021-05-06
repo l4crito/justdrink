@@ -99,7 +99,7 @@ export class TaskProvider {
         result.push(obj);
       }
 
-      const tasks: TaskModel[] = result.filter(t => t.id && t.reto).map(t => {
+      const tasks: TaskModel[] = result.filter(t => t.id.trim() && t.reto.trim()).map(t => {
         return { id: t.id, task: t.reto, type: t.tipo, round: t.ronda ? t.ronda : -1 }
       });
       this.taskPool = tasks;
