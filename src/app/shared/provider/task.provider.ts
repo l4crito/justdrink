@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 import { TaskModel, TaskType } from 'src/app/models/task.model';
+import { getItem, Names, setItem } from 'src/app/utils/store.util';
 import { environment } from 'src/environments/environment';
 import { GoogleSheetService } from '../services/google-sheet.service';
 
@@ -18,13 +19,21 @@ export class TaskProvider {
   animateBg = false;
   animateNumber = false;
   task$ = new Subject<boolean>();
-  round = 0;
+  round$ = new BehaviorSubject<number>(0);
   constructor(private googleService: GoogleSheetService) {
     this.getPool()
     this.task$.pipe(
       debounceTime(300)
     ).subscribe(() => { this.fetchTasks(); })
     this.getTasks();
+  }
+
+  set round(value: number) {
+    setItem(Names.ROUND, value);
+    this.round$.next(value);
+  }
+  get round(): number {
+    return this.round$.value;
   }
 
   assignTask(): any {
@@ -38,6 +47,7 @@ export class TaskProvider {
     const index = Math.floor(Math.random() * unasignedTasks.length);
     const task = unasignedTasks[index];
     this.assignedTasks.push(task);
+    setItem(Names.ASSIGNED_TASKS, this.assignedTasks);
     return task;
   }
   removeAsignedTask(task: TaskModel | undefined | null) {
@@ -71,7 +81,7 @@ export class TaskProvider {
           return;
         }
       }
-      localStorage.setItem("lastUpdate", new Date().toString());
+      localStorage.setItem(Names.LAST_UPDATE, new Date().toString());
     }
 
     this.googleService.getTasks().subscribe((res: any) => {
@@ -123,15 +133,18 @@ export class TaskProvider {
   }
 
   storePool() {
-    localStorage.setItem("tasks", JSON.stringify(this.taskPool));
+    setItem(Names.TASKS, this.taskPool);
   }
   getPool() {
-    const tasks = localStorage.getItem("tasks");
+    const tasks = getItem(Names.TASKS);
     if (tasks) {
-      this.taskPool = JSON.parse(tasks);
+      this.taskPool = tasks;
       this.filterTasks();
       this.animateDears();
     }
+
+    const assignedTasks = getItem(Names.TASKS);
+    this.assignedTasks = assignedTasks ? assignedTasks : [];
   }
 
 }

@@ -28,8 +28,9 @@
             [disabled]="this.playerProvider.players.length < 2 || !this.taskProvider.tasks.length" (click)="start()">
             EMPEZAR
         </button>
-        <button color="warn" class="start button" mat-raised-button *ngIf="playerProvider.canResume" (click)="resume()"
-            [disabled]="this.playerProvider.players.length < 2 || !this.taskProvider.tasks.length" @apearAnimation>
+        <button color="warn" class="start button" mat-raised-button *ngIf="playerProvider.taskProvider.round"
+            (click)="resume()" [disabled]="this.playerProvider.players.length < 2 || !this.taskProvider.tasks.length"
+            @apearAnimation>
             CONTINUAR
         </button>
     </div>

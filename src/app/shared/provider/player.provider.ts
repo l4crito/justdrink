@@ -5,6 +5,7 @@ import { TaskModel, TaskType } from 'src/app/models/task.model';
 import { highlight } from 'src/app/utils/highlight.util';
 import { TaskProvider } from './task.provider';
 import { debounceTime } from 'rxjs/operators';
+import { getItem, Names, setItem } from 'src/app/utils/store.util';
 
 @Injectable({
   providedIn: 'root'
@@ -13,26 +14,32 @@ export class PlayerProvider {
   resume = false;
   canResume = false;
   players: PlayerModel[] = [];
-  current = 0;
+  current = -1;
   currentPlayer!: PlayerModel | null;
   nextTimer: any = null;
   playerTasks: { player: PlayerModel, task?: TaskModel }[] = [];
 
   nextPlayerSubject = new Subject<boolean>();
-  prevPlayerSubject = new Subject<boolean>();
-  prevPlayerSubscription?: Subscription;
   nextPlayerSubscription?: Subscription;
   types = {
     normal: { type: TaskType.NORMAL, status: true },
     hot: { type: TaskType.HOT, status: false },
   };
   firstPlayer = 0;
-  constructor(private taskProvider: TaskProvider) {
-    this.prevPlayerSubscription = this.prevPlayerSubject.pipe(
-      debounceTime(200)
-    ).subscribe(() => {
-      this.findPrevPlayer();
-    })
+  constructor(public taskProvider: TaskProvider) {
+
+    let round = getItem(Names.ROUND);
+    round = round ? Number(round) : 0;
+    if (round) {
+      this.taskProvider.round = round;
+      this.players = getItem(Names.PLAYERS);
+      this.taskProvider.currentTask = getItem(Names.CURRENT_TASK);
+      this.taskProvider.assignedTasks = getItem(Names.ASSIGNED_TASKS);
+      this.currentPlayer = getItem(Names.CURRENT_PLAYER);
+      this.current = this.playerIndex(this.currentPlayer);
+      this.resume = true;
+    }
+
     this.nextPlayerSubscription = this.nextPlayerSubject.pipe(
       debounceTime(200)
     ).subscribe(() => {
@@ -48,6 +55,7 @@ export class PlayerProvider {
       highlight(playerPresent);
     } else {
       this.players.unshift(player);
+      this.storePlayers();
       this.toogleGender();
     }
   }
@@ -57,6 +65,7 @@ export class PlayerProvider {
     this.players = this.players.filter(pla => pla.name !== player.name);
     this.playerTasks = this.playerTasks.filter(playerTask => playerTask.player.name !== player.name);
     this.deletePlayerTasks(player);
+    this.storePlayers();
     if (player.name === this.currentPlayer?.name) {
       const lastPlayer = this.lastPlayer();
       if (lastPlayer) {
@@ -65,8 +74,8 @@ export class PlayerProvider {
       }
     }
   }
-  playerIndex(player: PlayerModel) {
-    return this.players.findIndex(playr => playr.name === player?.name);
+  playerIndex(player: PlayerModel | null | undefined) {
+    return player ? this.players.findIndex(playr => playr.name === player?.name) : -1;
   }
 
   start() {
@@ -74,8 +83,9 @@ export class PlayerProvider {
     this.taskProvider.currentTask = null;
     const index = Math.floor(Math.random() * (this.players.length - 1));
     this.firstPlayer = (index + 1);
+    this.current = index;
     this.currentPlayer = this.players[index];
-    this.taskProvider.round = 1;
+    this.taskProvider.round = 0;
     this.nextPlayer(null);
   }
 
@@ -86,9 +96,7 @@ export class PlayerProvider {
 
   }
 
-  prevPlayer() {
-    this.prevPlayerSubject.next(true);
-  }
+
   findNextPlayer() {
     this.taskProvider.currentTask = null;
     if (this.currentPlayer) {
@@ -109,10 +117,12 @@ export class PlayerProvider {
       setTimeout(() => {
         if (this.currentPlayer) {
           this.currentPlayer.position = PlayerPosition.MIDDLE;
+          setItem(Names.CURRENT_PLAYER, this.currentPlayer);
           this.playerTasks.push({ player: this.currentPlayer });
           setTimeout(() => {
             const task: TaskModel = this.taskProvider.assignTask();
             this.verifyTask(task);
+            setItem(Names.CURRENT_TASK, task);
             const lastTask = this.lastAssignedTask();
             this.taskProvider.currentTask = task;
             if (lastTask) {
@@ -124,39 +134,7 @@ export class PlayerProvider {
       }, 280);
     }, 280);
   }
-  findPrevPlayer() {
-    // if (this.playerTasks.length > 1) {
-    //   const popedTask = this.playerTasks.pop();
-    //   this.taskProvider.removeAsignedTask(popedTask?.task);
-    // } else {
-    //   highlight(this.playerTasks[0]?.player)
-    //   return;
-    // }
-    // const lastTask = this.lastAssignedTask();
-    // if (lastTask) {
-    //   this.taskProvider.currentTask = null;
-    //   if (this.currentPlayer) {
-    //     this.currentPlayer.position = PlayerPosition.LEFT;
-    //   }
-    //   setTimeout(() => {
-    //     lastTask.player.position = PlayerPosition.RIGHT;
-    //     this.currentPlayer = lastTask.player;
-    //     setTimeout(() => {
-    //       lastTask.player.position = PlayerPosition.MIDDLE;
-    //       this.current = this.playerIndex(lastTask.player);
-    //       let before = (this.current - 1)
-    //       before = before < 0 ? (this.players.length - 1) : before;
-    //       if (before === this.firstPlayer) {
-    //         this.taskProvider.round--;
-    //       }
-    //       setTimeout(() => {
-    //         this.taskProvider.currentTask = lastTask.task;
-    //       }, 500);
-    //     }, 280);
-    //   }, 280);
 
-    // }
-  }
 
 
   finsh() {
@@ -164,7 +142,10 @@ export class PlayerProvider {
     this.playerTasks = [];
   }
   verifyIfCanResume() {
-    this.canResume = this.playerTasks.length > 0 ? true : false;
+    if (this.players.length < 2) {
+      this.taskProvider.round = 0;
+    }
+    this.canResume = this.taskProvider.round > 0 ? true : false;
   }
   lastPlayer() {
     return this.lastAssignedTask()?.player;
@@ -212,6 +193,13 @@ export class PlayerProvider {
       this.taskProvider.others = others;
       this.taskProvider.filterTasks();
     }
+    this.storePlayers();
+  }
+  storePlayers() {
+    setItem(Names.PLAYERS, this.players);
+  }
+  storeCurrentPlayer() {
+    setItem(Names.CURRENT_PLAYER, this.currentPlayer);
   }
 
 }
