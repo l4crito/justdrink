@@ -26,6 +26,7 @@ export class PlayerProvider {
     hot: { type: TaskType.HOT, status: false },
   };
   firstPlayer = 0;
+  assigningPlayer = false;
   constructor(public taskProvider: TaskProvider) {
 
     let round = getItem(Names.ROUND);
@@ -79,6 +80,7 @@ export class PlayerProvider {
   }
 
   start() {
+    this.players.forEach(player => player.position = PlayerPosition.LEFT);
     this.currentPlayer = null;
     this.taskProvider.currentTask = null;
     const index = Math.floor(Math.random() * (this.players.length - 1));
@@ -98,6 +100,10 @@ export class PlayerProvider {
 
 
   findNextPlayer() {
+    if (this.assigningPlayer) {
+      return;
+    }
+    this.assigningPlayer = true;
     this.taskProvider.currentTask = null;
     if (this.currentPlayer) {
       this.currentPlayer.position = PlayerPosition.RIGHT;
@@ -120,6 +126,7 @@ export class PlayerProvider {
           setItem(Names.CURRENT_PLAYER, this.currentPlayer);
           this.playerTasks.push({ player: this.currentPlayer });
           setTimeout(() => {
+            this.assigningPlayer = false;
             const task: TaskModel = this.taskProvider.assignTask();
             this.verifyTask(task);
             setItem(Names.CURRENT_TASK, task);

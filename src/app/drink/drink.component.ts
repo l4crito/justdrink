@@ -23,7 +23,7 @@ export class DrinkComponent implements OnInit, OnDestroy {
       this.playerProvider.start();
     }
     this.hotkeyService.add(new Hotkey(['enter', 'right'], (event: KeyboardEvent): boolean => {
-      this.playerProvider.nextPlayer(null);
+      this.playerProvider.findNextPlayer();
       return false;
     }));
     this.hotkeyService.add(new Hotkey(['backspace'], (event: KeyboardEvent): boolean => {
@@ -33,7 +33,7 @@ export class DrinkComponent implements OnInit, OnDestroy {
   }
   ngOnDestroy(): void {
     this.hotkeyService.remove(new Hotkey(['enter', 'right'], (event: KeyboardEvent): boolean => {
-      this.playerProvider.nextPlayer(null);
+      this.playerProvider.findNextPlayer();
       return false;
     }));
     this.hotkeyService.remove(new Hotkey(['backspace'], (event: KeyboardEvent): boolean => {
