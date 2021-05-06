@@ -71,18 +71,18 @@ export class TaskProvider {
   }
 
   fetchTasks() {
-    // if (environment.production && this.taskPool.length) {
-    //   const lastUpdate = localStorage.getItem("lastUpdate");
-    //   if (lastUpdate) {
-    //     const currentDate = new Date();
-    //     const lastDate = new Date(lastUpdate);
-    //     let diff = (currentDate.getTime() - lastDate.getTime()) / 1000;
-    //     if (diff < 300) {
-    //       return;
-    //     }
-    //   }
-    //   localStorage.setItem(Names.LAST_UPDATE, new Date().toString());
-    // }
+    if (environment.production && this.taskPool.length) {
+      const lastUpdate = localStorage.getItem("lastUpdate");
+      if (lastUpdate) {
+        const currentDate = new Date();
+        const lastDate = new Date(lastUpdate);
+        let diff = (currentDate.getTime() - lastDate.getTime()) / 1000;
+        if (diff < 120) {
+          return;
+        }
+      }
+      localStorage.setItem(Names.LAST_UPDATE, new Date().toString());
+    }
 
     this.googleService.getTasks().subscribe((res: any) => {
       var lines = res.split("\r\n");
