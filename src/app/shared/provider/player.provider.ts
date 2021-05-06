@@ -54,7 +54,7 @@ export class PlayerProvider {
     if (playerPresent) {
       highlight(playerPresent);
     } else {
-      this.players.unshift(player);
+      this.players.splice((this.current + 1), 0, player);
       this.storePlayers();
       this.toogleGender();
     }
