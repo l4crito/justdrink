@@ -27,6 +27,11 @@ export class PlayerProvider {
   };
   firstPlayer = 0;
   assigningPlayer = false;
+
+  colors = ['#ff4c4c', '#34bf49', "#7d3f98", "#8e43e7", "#3be8b0", "#d2ea32", "#2b80ff", "#f37023"];
+  banColors = ['#ff4c4c', '#34bf49', "#7d3f98", "#8e43e7", "#3be8b0", "#d2ea32", "#2b80ff", "#f37023"];
+  partner: PlayerModel | null = null;
+  ban: PlayerModel | null = null;
   constructor(public taskProvider: TaskProvider) {
     if (taskProvider.getTimeDifference(Names.LAST_START) < taskProvider.day) {
       let round = getItem(Names.ROUND);
@@ -65,6 +70,7 @@ export class PlayerProvider {
   removePlayer(player: PlayerModel, evt: any) {
     evt?.preventDefault();
     evt?.stopImmediatePropagation();
+    this.removePartner(player);
     this.players = this.players.filter(pla => pla.name !== player.name);
     this.playerTasks = this.playerTasks.filter(playerTask => playerTask.player.name !== player.name);
     this.deletePlayerTasks(player);
@@ -77,6 +83,77 @@ export class PlayerProvider {
       }
     }
   }
+  assignPartner(current?: PlayerModel, evt?: any) {
+    evt?.preventDefault();
+    evt?.stopImmediatePropagation();
+    if (!current) {
+      return;
+    }
+    if (current.partner || this.partner?.partner === current.partner) {
+      this.removePartner(current);
+      this.partner = null;
+      return;
+    }
+
+    if (this.partner) {
+      if (current.partner) {
+        this.removePartner(current);
+      }
+      current.partner = this.partner.partner;
+      this.partner.assigningPartner = false;
+      this.partner = null;
+    } else {
+      this.partner = current;
+      const color = this.colors.pop();
+      this.partner.partner = color;
+      this.partner.assigningPartner = true;
+    }
+    this.storePlayers();
+  }
+  removePartner(player?: PlayerModel) {
+    this.colors.push(player?.partner);
+    this.players.filter(play => play.partner === player?.partner).forEach(p => {
+      p.partner = null;
+      p.assigningPartner = false;
+    });
+    this.storePlayers();
+  }
+  assignBan(current?: PlayerModel, evt?: any) {
+    evt?.preventDefault();
+    evt?.stopImmediatePropagation();
+    if (!current) {
+      return;
+    }
+    if (current.ban || this.ban?.ban === current.ban) {
+      this.removeBan(current);
+      this.ban = null;
+      return;
+    }
+
+    if (this.ban) {
+      if (current.ban) {
+        this.removeBan(current);
+      }
+      current.ban = this.ban.ban;
+      this.ban.assigningBan = false;
+      this.ban = null;
+    } else {
+      this.ban = current;
+      const color = this.banColors.pop();
+      this.ban.ban = color;
+      this.ban.assigningBan = true;
+    }
+    this.storePlayers();
+  }
+  removeBan(current?: PlayerModel) {
+    this.banColors.push(current?.ban);
+    this.players.filter(play => play.ban === current?.ban).forEach(p => {
+      p.ban = null;
+      p.assigningBan = false;
+    });
+    this.storePlayers();
+  }
+
   playerIndex(player: PlayerModel | null | undefined) {
     return player ? this.players.findIndex(playr => playr.name === player?.name) : -1;
   }
@@ -194,6 +271,16 @@ export class PlayerProvider {
   }
 
   toogleGender(player?: PlayerModel) {
+
+    // if (this.partner) {
+    //   this.assignPartner(player, null);
+    //   return;
+    // }
+    // if (this.ban) {
+    //   this.assignBan(player, null);
+    //   return;
+    // }
+
     if (player) {
       player.female = !player.female;
     }

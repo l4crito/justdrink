@@ -2,11 +2,18 @@
     [ngClass]="{'highlight': player.highlight,'male': !player.female,'female': player.female}"
     (click)="this.playerProvider.toogleGender(player)" mat-ripple>
     <div class="flex-start">
-        <mat-icon>{{player.female?'female':'male'}}</mat-icon>
+        <button mat-icon-button (click)="playerProvider.assignPartner(player,$event)">
+            <mat-icon [ngStyle]="{color:player.partner?player.partner:'gray'}"
+                [ngClass]="{'heart': player.assigningPartner}">favorite_border</mat-icon>
+        </button>
         <mat-label>
             {{player.name}}
         </mat-label>
     </div>
+    <button mat-icon-button (click)="playerProvider.assignBan(player,$event)">
+        <mat-icon [ngStyle]="{color:player.ban?player.ban:'gray'}" [ngClass]="{'heart': player.assigningBan}">
+            block</mat-icon>
+    </button>
     <button mat-icon-button (click)="playerProvider.removePlayer(player,$event)" *ngIf="showDelete">
         <mat-icon>cancel</mat-icon>
     </button>

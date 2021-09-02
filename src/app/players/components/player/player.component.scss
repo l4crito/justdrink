@@ -1,6 +1,12 @@
+mat-icon {
+  transition: 300ms ease-in-out;
+}
 .player {
   color: white;
   font-size: 1.2rem;
+  button {
+    margin-left: 1rem;
+  }
 }
 
 .male {
@@ -10,13 +16,24 @@
   color: #eb49a6;
 }
 .flex-start {
-  mat-icon {
-    margin-right: 1rem;
-  }
+  width: 100%;
+}
+.heart {
+  animation: beat 0.25s infinite alternate;
+  transform-origin: center;
 }
 
+/* Heart beat animation */
+@keyframes beat {
+  to {
+    transform: scale(1.2);
+  }
+}
 @media all and(max-width:800px) {
   .player {
     font-size: 0.9rem;
+    button {
+      margin-left: 0;
+    }
   }
 }

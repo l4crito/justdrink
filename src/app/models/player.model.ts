@@ -8,6 +8,10 @@ export interface PlayerModel {
     highlight?: boolean;
     position: PlayerPosition;
     female?: boolean;
+    partner?: any;
+    assigningPartner: boolean;
+    ban?: any;
+    assigningBan: boolean;
 
 }
 
