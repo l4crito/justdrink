@@ -44,7 +44,12 @@ export class TaskProvider {
     }
     const unasignedTasks = this.tasks
       .filter(task => !this.assignedTasks.find(at => task.id === at.id))
-      .filter(task => this.round >= (task.round ? task.round : 1));
+      // .filter(t => t.task ? t?.task?.includes('(o)') : false)
+    .filter(task => this.round >= (task.round ? task.round : 1));
+    if (!unasignedTasks.length) {
+      this.assignedTasks = [];
+      return this.assignTask();
+    }
     const index = Math.floor(Math.random() * unasignedTasks.length);
     const task = unasignedTasks[index];
     this.assignedTasks.push(task);

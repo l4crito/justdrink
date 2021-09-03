@@ -60,6 +60,7 @@ export class PlayerProvider {
         }
         this.current = this.playerIndex(this.currentPlayer);
         this.resume = true;
+        this.toogleGender();
       }
     }
 
@@ -282,25 +283,35 @@ export class PlayerProvider {
   }
 
   getOtherPlayer(taskType?: TaskType) {
-    let otherPlayers = this.players
+
+    if (taskType === TaskType.HOT && this.currentPlayer?.color) {
+      return this.players.filter(player => player.color === this.currentPlayer?.color)
+        .find(player => player.name !== this.currentPlayer?.name);
+    }
+    let otherPlayers = [];
+    otherPlayers = this.players
       .filter(player => player.female !== this.currentPlayer?.female)
       .filter(player => player.name !== this.currentPlayer?.name)
-    if (taskType === TaskType.HOT && this.currentPlayer?.color) {
-      otherPlayers = otherPlayers.filter(player => player.color === this.currentPlayer?.color);
-    }
-    if (taskType === TaskType.HOT && this.currentPlayer?.banColor) {
+
+    if (this.currentPlayer?.banColor) {
       otherPlayers = otherPlayers.filter(player => player.banColor !== this.currentPlayer?.banColor);
     }
-    return otherPlayers.length ? otherPlayers[Math.floor(Math.random() * otherPlayers.length)] : null;
+    if (taskType === TaskType.HOT) {
+      otherPlayers = otherPlayers.filter(player => !player.color);
+    }
+    return otherPlayers.length ? otherPlayers[Math.floor(Math.random() * otherPlayers.length)] : this.getRandomPlayer();
   }
   getRandomPlayer(taskType?: TaskType) {
-    let anyPlayer = this.players.filter(player => player.name !== this.currentPlayer?.name)
-    if (taskType === TaskType.HOT && this.currentPlayer?.color) {
-      anyPlayer = anyPlayer.filter(player => player.color === this.currentPlayer?.color);
-    }
     if (taskType === TaskType.HOT && this.currentPlayer?.banColor) {
+      return this.players.filter(player => player.banColor === this.currentPlayer?.banColor)
+        .find(player => player.name !== this.currentPlayer?.name);
+    }
+    let anyPlayer = this.players.filter(player => player.name !== this.currentPlayer?.name)
+
+    if (this.currentPlayer?.banColor) {
       anyPlayer = anyPlayer.filter(player => player.banColor !== this.currentPlayer?.banColor);
     }
+
     return anyPlayer.length ? anyPlayer[Math.floor(Math.random() * anyPlayer.length)] : null;
   }
 
