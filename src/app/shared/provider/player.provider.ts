@@ -30,8 +30,8 @@ export class PlayerProvider {
 
   colors = ['#ff4c4c', '#34bf49', "#7d3f98", "#8e43e7", "#3be8b0", "#d2ea32", "#2b80ff", "#f37023"];
   banColors = ['#ff4c4c', '#34bf49', "#7d3f98", "#8e43e7", "#3be8b0", "#d2ea32", "#2b80ff", "#f37023"];
-  partner: PlayerModel | null = null;
-  ban: PlayerModel | null = null;
+  partner: PlayerModel | null | undefined = null;
+  banned: PlayerModel | null | undefined = null;
   constructor(public taskProvider: TaskProvider) {
     if (taskProvider.getTimeDifference(Names.LAST_START) < taskProvider.day) {
       let round = getItem(Names.ROUND);
@@ -42,6 +42,22 @@ export class PlayerProvider {
         this.taskProvider.currentTask = getItem(Names.CURRENT_TASK);
         this.taskProvider.assignedTasks = getItem(Names.ASSIGNED_TASKS);
         this.currentPlayer = getItem(Names.CURRENT_PLAYER);
+        const partner = getItem(Names.PARTNER);
+        const ban = getItem(Names.BAN);
+        const colors = getItem(Names.COLORS);
+        const banColors = getItem(Names.BAN_COLORS);
+        if (colors) {
+          this.colors = colors;
+        }
+        if (banColors) {
+          this.banColors = banColors;
+        }
+        if (partner) {
+          this.partner = this.players.find(pa => pa.name === partner.name);
+        }
+        if (ban) {
+          this.banned = this.players.find(pa => pa.name === ban.name);
+        }
         this.current = this.playerIndex(this.currentPlayer);
         this.resume = true;
       }
@@ -70,7 +86,7 @@ export class PlayerProvider {
   removePlayer(player: PlayerModel, evt: any) {
     evt?.preventDefault();
     evt?.stopImmediatePropagation();
-    this.removePartner(player);
+    this.removePartner(player.color);
     this.players = this.players.filter(pla => pla.name !== player.name);
     this.playerTasks = this.playerTasks.filter(playerTask => playerTask.player.name !== player.name);
     this.deletePlayerTasks(player);
@@ -83,37 +99,41 @@ export class PlayerProvider {
       }
     }
   }
+
+
   assignPartner(current?: PlayerModel, evt?: any) {
     evt?.preventDefault();
     evt?.stopImmediatePropagation();
     if (!current) {
       return;
     }
-    if (current.partner || this.partner?.partner === current.partner) {
-      this.removePartner(current);
+    if (current.color && !this.partner || this.partner?.name === current.name) {
+      this.removePartner(current.color);
       this.partner = null;
       return;
     }
 
     if (this.partner) {
-      if (current.partner) {
-        this.removePartner(current);
+      if (current?.color) {
+        this.removePartner(current.color);
       }
-      current.partner = this.partner.partner;
+      current.color = this.partner.color;
       this.partner.assigningPartner = false;
       this.partner = null;
     } else {
       this.partner = current;
       const color = this.colors.pop();
-      this.partner.partner = color;
+      this.partner.color = color;
       this.partner.assigningPartner = true;
     }
     this.storePlayers();
   }
-  removePartner(player?: PlayerModel) {
-    this.colors.push(player?.partner);
-    this.players.filter(play => play.partner === player?.partner).forEach(p => {
-      p.partner = null;
+  removePartner(color: string) {
+    this.colors.push(color);
+    this.colors = [...new Set(this.colors)];
+
+    this.players.filter(play => play?.color === color).forEach(p => {
+      p.color = null;
       p.assigningPartner = false;
     });
     this.storePlayers();
@@ -124,31 +144,32 @@ export class PlayerProvider {
     if (!current) {
       return;
     }
-    if (current.ban || this.ban?.ban === current.ban) {
-      this.removeBan(current);
-      this.ban = null;
+    if (current.banColor && !this.banned || this.banned?.name === current.name) {
+      this.removeBan(current.banColor);
+      this.banned = null;
       return;
     }
 
-    if (this.ban) {
-      if (current.ban) {
-        this.removeBan(current);
+    if (this.banned) {
+      if (current?.banColor) {
+        this.removeBan(current.banColor);
       }
-      current.ban = this.ban.ban;
-      this.ban.assigningBan = false;
-      this.ban = null;
+      current.banColor = this.banned.banColor;
+      this.banned.assigningBan = false;
+      this.banned = null;
     } else {
-      this.ban = current;
+      this.banned = current;
       const color = this.banColors.pop();
-      this.ban.ban = color;
-      this.ban.assigningBan = true;
+      this.banned.banColor = color;
+      this.banned.assigningBan = true;
     }
     this.storePlayers();
   }
-  removeBan(current?: PlayerModel) {
-    this.banColors.push(current?.ban);
-    this.players.filter(play => play.ban === current?.ban).forEach(p => {
-      p.ban = null;
+  removeBan(color: string) {
+    this.banColors.push(color);
+    this.banColors = [...new Set(this.banColors)];
+    this.players.filter(play => play?.banColor === color).forEach(p => {
+      p.banColor = null;
       p.assigningBan = false;
     });
     this.storePlayers();
@@ -248,38 +269,42 @@ export class PlayerProvider {
   }
 
   verifyTask(task: TaskModel) {
+
     if (task.task?.includes('(o)')) {
-      task.taskToPlay = JSON.parse(JSON.stringify(task.task?.replace('(o)', this.getOtherPlayer()?.name || '')));
+      task.taskToPlay = JSON.parse(JSON.stringify(task.task?.replace('(o)', this.getOtherPlayer(task.type)?.name || '')));
     } else
       if (task.task?.includes('(a)')) {
-        task.taskToPlay = JSON.parse(JSON.stringify(task.task?.replace('(a)', this.getRandomPlayer()?.name || '')))
+        task.taskToPlay = JSON.parse(JSON.stringify(task.task?.replace('(a)', this.getRandomPlayer(task.type)?.name || '')))
       } else {
         task.taskToPlay = task.task;
       }
 
   }
 
-  getOtherPlayer() {
-    const otherPlayers = this.players
+  getOtherPlayer(taskType?: TaskType) {
+    let otherPlayers = this.players
       .filter(player => player.female !== this.currentPlayer?.female)
       .filter(player => player.name !== this.currentPlayer?.name)
+    if (taskType === TaskType.HOT && this.currentPlayer?.color) {
+      otherPlayers = otherPlayers.filter(player => player.color === this.currentPlayer?.color);
+    }
+    if (taskType === TaskType.HOT && this.currentPlayer?.banColor) {
+      otherPlayers = otherPlayers.filter(player => player.banColor !== this.currentPlayer?.banColor);
+    }
     return otherPlayers.length ? otherPlayers[Math.floor(Math.random() * otherPlayers.length)] : null;
   }
-  getRandomPlayer() {
-    const anyPlayer = this.players.filter(player => player.name !== this.currentPlayer?.name)
+  getRandomPlayer(taskType?: TaskType) {
+    let anyPlayer = this.players.filter(player => player.name !== this.currentPlayer?.name)
+    if (taskType === TaskType.HOT && this.currentPlayer?.color) {
+      anyPlayer = anyPlayer.filter(player => player.color === this.currentPlayer?.color);
+    }
+    if (taskType === TaskType.HOT && this.currentPlayer?.banColor) {
+      anyPlayer = anyPlayer.filter(player => player.banColor !== this.currentPlayer?.banColor);
+    }
     return anyPlayer.length ? anyPlayer[Math.floor(Math.random() * anyPlayer.length)] : null;
   }
 
-  toogleGender(player?: PlayerModel) {
-
-    // if (this.partner) {
-    //   this.assignPartner(player, null);
-    //   return;
-    // }
-    // if (this.ban) {
-    //   this.assignBan(player, null);
-    //   return;
-    // }
+  toogleGender(player?: PlayerModel, ev?: any) {
 
     if (player) {
       player.female = !player.female;
@@ -295,6 +320,10 @@ export class PlayerProvider {
   }
   storePlayers() {
     setItem(Names.PLAYERS, this.players);
+    setItem(Names.PARTNER, this.partner);
+    setItem(Names.BAN, this.banned);
+    setItem(Names.COLORS, this.colors);
+    setItem(Names.BAN_COLORS, this.banColors);
   }
   storeCurrentPlayer() {
     setItem(Names.CURRENT_PLAYER, this.currentPlayer);

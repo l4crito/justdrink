@@ -22,4 +22,8 @@ export enum Names {
     ASSIGNED_TASKS = 'ASSIGNED_TASKS',
     CURRENT_TASK = 'CURRENT_TASK',
     ROUND = 'ROUND',
+    PARTNER = 'PARTNER',
+    BAN = 'BAN',
+    COLORS = 'COLOR',
+    BAN_COLORS = 'BAN_COLORS',
 }
