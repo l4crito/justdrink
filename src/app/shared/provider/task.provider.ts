@@ -77,11 +77,11 @@ export class TaskProvider {
   }
 
   fetchTasks() {
-    if (environment.production && this.taskPool.length) {
-      if (this.getTimeDifference() < 180) {
-        return;
-      }
-    }
+    // if (environment.production && this.taskPool.length) {
+    //   if (this.getTimeDifference() < 180) {
+    //     return;
+    //   }
+    // }
     localStorage.setItem(Names.LAST_UPDATE, new Date().toString());
     this.googleService.getTasks().subscribe((res: any) => {
       var lines = res.split("\r\n");

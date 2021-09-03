@@ -44,7 +44,7 @@ export class PlayersComponent implements OnInit, OnDestroy {
       this.focusAddPlayer();
       return false;
     }));
-    this.hotkeyService.add(new Hotkey(['down'], (event: KeyboardEvent): boolean => {
+    this.hotkeyService.add(new Hotkey(['ctrl+down'], (event: KeyboardEvent): boolean => {
       this.taskProvider.getTasks();
       return false;
     }, ['input']));

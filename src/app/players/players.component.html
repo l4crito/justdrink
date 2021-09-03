@@ -19,14 +19,14 @@
     <div class="flex-center buttons">
 
         <div class="dear flex-center" *ngIf="taskProvider.taskPool.length &&this.taskProvider.animateBg" @rightToLeft>
-            <!-- <a class="dears"
+            <a class="dears"
                 href="https://docs.google.com/spreadsheets/d/1OrWDh-iwv1UBjwbvqA8wbdMkQzEulyKu/edit#gid=441603836"
-                target="_blank"> -->
+                target="_blank">
                 <div class="number flex-center" @zoomIn *ngIf="taskProvider.animateNumber">
                     <div [@leftRightNumeric]="taskProvider.tasks.length"> {{taskProvider.tasks.length}} </div>
                     <span class="dears"> Desafíos</span>
                 </div>
-            <!-- </a> -->
+            </a>
         </div>
         <button color="primary" class="start button" mat-raised-button
             [disabled]="this.playerProvider.players.length < 2 || !this.taskProvider.tasks.length" (click)="start()">

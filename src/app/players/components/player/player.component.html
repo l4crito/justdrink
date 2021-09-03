@@ -1,20 +1,18 @@
-<div class="line flex-between player ns"
-    [ngClass]="{'highlight': player.highlight,'male': !player.female,'female': player.female}"
-    (click)="this.playerProvider.toogleGender(player)" mat-ripple>
+<div class="line flex-between player ns" (click)="this.playerProvider.toogleGender(player)" mat-ripple>
     <div class="flex-start">
         <button mat-icon-button (click)="playerProvider.assignPartner(player,$event)">
-            <mat-icon [ngStyle]="{color:player.color?player.color:'gray'}"
+            <mat-icon [ngStyle]="{color:player.color?player.color:'grey'}"
                 [ngClass]="{'heart': player.assigningPartner}">favorite_border</mat-icon>
         </button>
-        <mat-label>
+        <mat-label [ngClass]="{'highlight': player.highlight,'male': !player.female,'female': player.female}">
             {{player.name}}
         </mat-label>
     </div>
     <button mat-icon-button (click)="playerProvider.assignBan(player,$event)">
-        <mat-icon [ngStyle]="{color:player.banColor?player.banColor:'gray'}" [ngClass]="{'heart': player.assigningBan}">
+        <mat-icon [ngStyle]="{color:player.banColor?player.banColor:'grey'}" [ngClass]="{'heart': player.assigningBan}">
             block</mat-icon>
     </button>
     <button mat-icon-button (click)="playerProvider.removePlayer(player,$event)" *ngIf="showDelete">
-        <mat-icon>cancel</mat-icon>
+        <mat-icon [ngStyle]="{color:'grey'}">cancel</mat-icon>
     </button>
 </div>
