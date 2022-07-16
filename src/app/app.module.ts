@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
+import { BrowserModule, HammerGestureConfig, HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -10,7 +10,13 @@ import { environment } from '../environments/environment';
 import { HttpClientModule } from '@angular/common/http';
 import { MaterialModule } from './material/material.module';
 
+import * as Hammer from 'hammerjs';
 
+export class HammerConfig extends HammerGestureConfig {
+  overrides = {
+    swipe: { direction: Hammer.DIRECTION_ALL },
+  };
+}
 @NgModule({
   declarations: [
     AppComponent
@@ -30,7 +36,10 @@ import { MaterialModule } from './material/material.module';
     MaterialModule
   ],
   providers: [
-
+    {
+      provide: HAMMER_GESTURE_CONFIG,
+      useClass: HammerConfig  
+    }
   ],
   bootstrap: [AppComponent]
 })

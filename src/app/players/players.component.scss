@@ -152,11 +152,26 @@ app-player {
     width: 100%;
     min-height: 50vh;
     max-height: 80vh;
+    height: 50vh;
     padding: 0 .3rem;
     margin: 0;
     overflow-y: auto;
     overflow-x: hidden;
-    height: fit-content;
+    &::-webkit-scrollbar {
+      width: 2px;
+      background: transparent;
+    }
+    &::-webkit-scrollbar-thumb {
+      background: transparent;
+    }
+    &::-webkit-scrollbar-track {
+      box-shadow: inset 0 0 5px transparent;
+    }
+    &:hover {
+      &::-webkit-scrollbar-thumb {
+        background: rgb(151, 151, 151);
+      }
+    }
   }
 
   app-player {
