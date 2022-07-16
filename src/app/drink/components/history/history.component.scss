@@ -1,33 +1,32 @@
 .history-btn {
-    position: fixed;
-    top: 2rem;
+    position: absolute;
     right: 2rem;
     color: white;
     width: 50px;
     height: 50px;
     background: #f44336;
     border-radius: 50px;
-    -moz-border-radius: 50px;
-    -webkit-border-radius: 50px;
     z-index: 3;
 }
-.task,
-.title {
+.taskk,
+.tit {
     color: white;
 }
-.title {
-    padding: 1rem 0;
+.tit {
+    height: 80px;
+    position: relative;
 }
-.task {
+
+.taskk {
+    font-size: 0.65rem;
     padding: .5rem 1rem;
     .player {
-        font-size: 0.8rem;
+        font-weight: 350;
     }
     .action {
-        font-size: 0.7rem;
-        font-weight: 400;
+        font-weight: 300;
         color: rgba(255, 255, 255, 0.577);
-        line-height: 0.7rem;
+        line-height: 0.65rem;
     }
 }
 @media all and(max-width:800px) {

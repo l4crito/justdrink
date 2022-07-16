@@ -1,10 +1,13 @@
-    <div class="history-btn  ns pointer flex-center" mat-ripple routerLink="/tomar">
-        <mat-icon>keyboard_arrow_down</mat-icon>
+  
+    <div class="tit flex-center">
+        <div>Historial</div> 
+
+        <div class="history-btn  ns pointer flex-center" mat-ripple routerLink="/tomar">
+            <mat-icon>keyboard_arrow_down</mat-icon>
+        </div>
     </div>
-    <div class="title flex-center">
-        Historial 
-    </div>
-    <div class="task" *ngFor="let task of history">
+
+    <div class="taskk" *ngFor="let task of history">
         <div class="player">{{task.player?.name }}</div>
         <div class="action">{{task.task?.taskToPlay |firstCapital}}</div>
     </div>
