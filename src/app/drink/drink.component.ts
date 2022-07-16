@@ -19,6 +19,7 @@ export class DrinkComponent implements OnInit, OnDestroy {
     private router: Router
   ) {
     if (!this.playerProvider.resume || this.playerProvider.current < 0) {
+      this.playerProvider.resume=true;
       this.playerProvider.finsh();
       this.playerProvider.start();
     }
