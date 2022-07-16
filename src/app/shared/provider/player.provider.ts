@@ -194,7 +194,7 @@ export class PlayerProvider {
     this.nextPlayer(null);
   }
 
-  nextPlayer(evt: any) {
+  nextPlayer(evt?: any) {
     evt?.preventDefault();
     evt?.stopImmediatePropagation();
     this.nextPlayerSubject.next(true);
