@@ -13,7 +13,7 @@
         </div>
     </div>
 
-    <div class="task flex-center pointer" (swiperight)="playerProvider.nextPlayer()" >
+    <div class="task flex-center pointer" (swipe)="playerProvider.nextPlayer()" >
         <div *ngIf="taskProvider.currentTask?.task" @apearAnimation>
             {{taskProvider.currentTask?.taskToPlay|firstCapital}}</div>
     </div>
