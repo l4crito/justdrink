@@ -235,6 +235,11 @@ export class PlayerProvider {
             setItem(Names.CURRENT_TASK, task);
             const lastTask = this.lastAssignedTask();
             this.taskProvider.currentTask = task;
+            if(this.taskProvider.history){
+              const historyItem={task:task,player:this.currentPlayer,round:this.taskProvider.round};
+              this.taskProvider.history.unshift(historyItem);
+              localStorage.setItem(Names.HISTORY,JSON.stringify(this.taskProvider.history));
+            }
             if (lastTask) {
               lastTask.task = task;
             }
@@ -245,9 +250,12 @@ export class PlayerProvider {
     }, 280);
   }
 
-
-
+clearHistory(){
+  this.taskProvider.history=[];
+  localStorage.setItem(Names.HISTORY,JSON.stringify(this.taskProvider.history));
+}
   finsh() {
+    this.clearHistory();
     this.taskProvider.assignedTasks = [];
     this.playerTasks = [];
   }

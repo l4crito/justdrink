@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
+import { PlayerModel } from 'src/app/models/player.model';
 import { TaskModel, TaskType } from 'src/app/models/task.model';
 import { getItem, Names, setItem } from 'src/app/utils/store.util';
 import { environment } from 'src/environments/environment';
@@ -21,12 +22,18 @@ export class TaskProvider {
   task$ = new Subject<boolean>();
   round$ = new BehaviorSubject<number>(0);
   day = 3600 * 24;
+  history: { player?: PlayerModel | undefined | null, task?: TaskModel, round: number }[]   = [];
+  showHistory = false;
   constructor(private googleService: GoogleSheetService) {
     this.getPool()
     this.task$.pipe(
       debounceTime(300)
     ).subscribe(() => { this.fetchTasks(); })
     this.getTasks();
+    if (history?.length) {
+      const history = localStorage.getItem(Names.HISTORY);
+      this.history = JSON.parse(history ? history : '[]')
+    }
   }
 
   set round(value: number) {
@@ -45,7 +52,7 @@ export class TaskProvider {
     const unasignedTasks = this.tasks
       .filter(task => !this.assignedTasks.find(at => task.id === at.id))
       // .filter(t => t.task ? t?.task?.includes('(o)') : false)
-    .filter(task => this.round >= (task.round ? task.round : 1));
+      .filter(task => this.round >= (task.round ? task.round : 1));
     if (!unasignedTasks.length) {
       this.assignedTasks = [];
       return this.assignTask();

@@ -5,11 +5,13 @@ import { DrinkRoutingModule } from './drink-routing.module';
 import { DrinkComponent } from './drink.component';
 import { SharedModule } from '../shared/shared.module';
 import { MaterialModule } from '../material/material.module';
+import { HistoryComponent } from './components/history/history.component';
 
 
 @NgModule({
   declarations: [
-    DrinkComponent
+    DrinkComponent,
+    HistoryComponent
   ],
   imports: [
     CommonModule,

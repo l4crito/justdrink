@@ -26,4 +26,5 @@ export enum Names {
     BAN = 'BAN',
     COLORS = 'COLOR',
     BAN_COLORS = 'BAN_COLORS',
+    HISTORY = 'HISTORY',
 }

@@ -43,6 +43,19 @@
   -webkit-border-radius: 50px;
   z-index: 3;
 }
+.history-btn {
+  position: fixed;
+  top: 2rem;
+  right: 2rem;
+  color: white;
+  width: 50px;
+  height: 50px;
+  background: #f44336;
+  border-radius: 50px;
+  -moz-border-radius: 50px;
+  -webkit-border-radius: 50px;
+  z-index: 3;
+}
 
 @media all and(max-width:800px) {
   .close {
@@ -51,6 +64,13 @@
     mat-icon{
       position: fixed;
       right: 8px;
+    }
+  }
+  .history-btn {
+    top: inherit;
+    right:  -5px;
+    mat-icon{
+      position: fixed;
     }
   }
   .bg {
