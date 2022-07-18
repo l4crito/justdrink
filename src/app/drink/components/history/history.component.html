@@ -1,17 +1,20 @@
-  
-    <div class="tit flex-center">
-        <div>Historial</div> 
-
-        <div class="history-btn  ns pointer flex-center" mat-ripple routerLink="/tomar">
-            <mat-icon>keyboard_arrow_down</mat-icon>
-        </div>
+<div class="tit flex-center">
+    <div class="flex-center title">{{title}} <span *ngIf="selectedPlayer">[ {{selectedPlayer?.name}} ]
+        <button mat-icon-button (click)="initHistory()"><mat-icon>close</mat-icon></button>
+        </span>
     </div>
+
+    <div class="history-btn  ns pointer flex-center" matRipple routerLink="/tomar">
+        <mat-icon>keyboard_arrow_down</mat-icon>
+    </div>
+</div>
 <div *ngFor="let line of history" class="flex-start history">
     <div class="flex-center round">{{line.round}}</div>
-   <section>
-    <div class="taskk" *ngFor="let task of line.tasks">
-        <div class="player">{{task.player?.name }}</div>
-        <div class="action">{{task.task?.taskToPlay |firstCapital}}</div>
-    </div>
-   </section>
+    <section>
+        <div class="taskk" *ngFor="let task of line.tasks" (click)="filterHistory(task.player)" matRipple>
+            <div class="player">{{task.player?.name }}</div>
+            <div class="action">{{task.task?.taskToPlay |firstCapital}}</div>
+        </div>
+    </section>
 </div>
+<div class="blank-space"></div>
