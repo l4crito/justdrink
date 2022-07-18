@@ -93,7 +93,7 @@ body {
   right: -10px;
   width: 150px;
   height: 150px;
-  background: #7b1fa2;
+  background: #f44336;
   border-radius: 150px;
   -moz-border-radius: 150px;
   -webkit-border-radius: 150px;
@@ -110,6 +110,7 @@ body {
 
 @media all and(max-width:800px) {
   .next {
+    position: fixed;
     width: 75px;
     height: 75px;
     border-radius: 75px;
@@ -123,6 +124,17 @@ body {
       right: 2px;
       bottom: 2px;
     }
+  }
+  .round-info{
+    position: fixed;
+    bottom: 60px;
+    right: 10px;
+    width: 40px;
+    height: 40px;
+    color: tomato;
+    border: solid 1px tomato;
+    border-radius: 50%;
+
   }
   ::-webkit-scrollbar {
     width: initial;

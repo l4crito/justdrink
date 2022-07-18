@@ -1,9 +1,9 @@
 <div class="bg flex-center">
     <div class="player flex-center" @playerAnimation>
-        <div class="close  ns pointer flex-center" mat-ripple (click)="back()">
-            <mat-icon>arrow_back_ios</mat-icon>
+        <div class="btn close  ns pointer flex-center" mat-ripple (click)="back()">
+            <mat-icon>group</mat-icon>
         </div>
-        <div class="history-btn  ns pointer flex-center" mat-ripple routerLink="history" *ngIf="taskProvider.history.length>1">
+        <div class="btn history-btn  ns pointer flex-center" mat-ripple routerLink="history" *ngIf="taskProvider.history.length>1">
             <mat-icon>history</mat-icon>
         </div>
         <div class="name ns" [@inOutAnimation]="playerProvider.currentPlayer?.position">
@@ -13,13 +13,13 @@
         </div>
     </div>
 
-    <div class="task flex-center pointer" (swipe)="playerProvider.nextPlayer()" >
+    <div class="task flex-center pointer" (swipe)="playerProvider.nextPlayer()" (click)="playerProvider.nextPlayer($event)">
         <div *ngIf="taskProvider.currentTask?.task" @apearAnimation>
             {{taskProvider.currentTask?.taskToPlay|firstCapital}}</div>
     </div>
-
+    <div class="round-info flex-center" matTooltip="Ronda" @apearAnimation *ngIf="taskProvider.round">{{taskProvider.round}}</div>
     <div class="next ns pointer mat-elevation-z3 flex-center" mat-ripple (click)="playerProvider.nextPlayer($event)"
-        @rotateLeft matTooltip="Ronda: {{taskProvider.round}}">
+        @rotateLeft>
         <mat-icon>navigate_next</mat-icon>
     </div>
 </div>

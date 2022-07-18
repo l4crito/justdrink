@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
+import { rightToLeft } from 'src/app/animations';
 import { HistoryModel } from 'src/app/models/history.model';
 import { PlayerModel } from 'src/app/models/player.model';
 import { PlayerTaskModel } from 'src/app/models/task.model';
 import { TaskProvider } from 'src/app/shared/provider/task.provider';
 
 @Component({
+  animations:[rightToLeft],
   selector: 'app-history',
   templateUrl: './history.component.html',
   styleUrls: ['./history.component.scss']
