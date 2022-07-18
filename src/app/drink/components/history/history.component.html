@@ -6,8 +6,12 @@
             <mat-icon>keyboard_arrow_down</mat-icon>
         </div>
     </div>
-
-    <div class="taskk" *ngFor="let task of history">
+<div *ngFor="let line of history" class="flex-start history">
+    <div class="flex-center round">{{line.round}}</div>
+   <section>
+    <div class="taskk" *ngFor="let task of line.tasks">
         <div class="player">{{task.player?.name }}</div>
         <div class="action">{{task.task?.taskToPlay |firstCapital}}</div>
     </div>
+   </section>
+</div>

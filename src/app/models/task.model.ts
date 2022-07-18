@@ -1,3 +1,5 @@
+import { PlayerModel } from "./player.model";
+
 export interface TaskModel {
     id: any;
     task?: string;
@@ -10,4 +12,10 @@ export interface TaskModel {
 export enum TaskType {
     NORMAL = 'n',
     HOT = 's',
+}
+
+export interface PlayerTaskModel {
+    player?: PlayerModel | undefined | null;
+    task?: TaskModel;
+    round?: number
 }

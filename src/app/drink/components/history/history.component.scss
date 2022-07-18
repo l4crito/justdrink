@@ -18,8 +18,12 @@
 }
 
 .taskk {
+    border-left: solid 1px rgba(255, 99, 71, 0.471);
+    padding: .2rem 1rem;
+    width: 100%;
+    
+
     font-size: 0.65rem;
-    padding: .5rem 1rem;
     .player {
         font-weight: 350;
     }
@@ -28,6 +32,15 @@
         color: rgba(255, 255, 255, 0.577);
         line-height: 0.65rem;
     }
+}
+.round {
+    color: tomato;
+    margin-right: 1rem;
+    width: 15px;
+    min-width: 15px;
+}
+.history {
+    margin: 1rem;
 }
 @media all and(max-width:800px) {
     .history-btn {

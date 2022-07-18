@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 import { PlayerModel } from 'src/app/models/player.model';
-import { TaskModel, TaskType } from 'src/app/models/task.model';
+import { PlayerTaskModel, TaskModel, TaskType } from 'src/app/models/task.model';
 import { getItem, Names, setItem } from 'src/app/utils/store.util';
 import { environment } from 'src/environments/environment';
 import { GoogleSheetService } from '../services/google-sheet.service';
@@ -22,7 +22,7 @@ export class TaskProvider {
   task$ = new Subject<boolean>();
   round$ = new BehaviorSubject<number>(0);
   day = 3600 * 24;
-  history: { player?: PlayerModel | undefined | null, task?: TaskModel, round: number }[]   = [];
+  history: PlayerTaskModel[]   = [];
   showHistory = false;
   constructor(private googleService: GoogleSheetService) {
     this.getPool()
