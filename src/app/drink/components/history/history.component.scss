@@ -18,21 +18,24 @@
     width: 100%;
 }
 
-.taskk {
-    border-left: solid 1px rgba(255, 99, 71, 0.471);
-    padding: .2rem 1rem;
-    width: 100%;
-    
-
-    font-size: 0.65rem;
-    .player {
-        font-weight: 350;
-    }
-    .action {
-        font-family: Verdana, Geneva, Tahoma, sans-serif;
-        font-weight: 500;
-        color: rgba(255, 255, 255, 0.577);
-        line-height: 0.7rem;
+.task-container{
+    flex-grow: 1;
+    .taskk {
+        display: flex;
+        flex-direction: column;
+        border-left: solid 1px rgba(255, 99, 71, 0.471);
+        padding: .2rem 1rem;
+        flex-grow: 1;
+        .player {
+            font-weight: 350;
+            font-size: .8rem;
+        }
+        .action {
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+            font-weight: 500;
+            color: rgba(255, 255, 255, 0.577);
+            line-height: 0.7rem;
+        }
     }
 }
 .round {
@@ -42,8 +45,9 @@
     min-width: 15px;
 }
 .history {
+    box-sizing: border-box;
     margin: 1rem;
-    width: 100%;
+    flex-grow: 1;
 }
 .close-filter{
         color: white;
