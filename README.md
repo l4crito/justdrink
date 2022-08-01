@@ -1,27 +1,9 @@
 # Justdrink
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.2.0.
+Este proyecto es una app web pwa (puede instalarse en dispositivos), tiene como objetivo poner retos a jugadores, se lo debe jugar en un grupo de almenos 2 personas preferentemente con bebida alcohólicas, el proyecto esta abierto a pull requests y a sugerencias.
+Los retos los lee la app de una hoja de calculo en linea al momento que se inicia, puedes agregar mas retos [aqui](https://docs.google.com/spreadsheets/d/1OrWDh-iwv1UBjwbvqA8wbdMkQzEulyKu/edit#gid=441603836).
 
-## Development server
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+[App](https://l4crito.github.io/justdrink/)
 
-## Code scaffolding
-
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
-
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+[Retos](https://docs.google.com/spreadsheets/d/1OrWDh-iwv1UBjwbvqA8wbdMkQzEulyKu/edit#gid=441603836)
