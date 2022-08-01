@@ -25,7 +25,7 @@ export class HistoryComponent implements OnInit {
     this.title="Historial"
     this.history = [];
     this.selectedPlayer = null;
-    this.getHisthory(this.taskProvider.history?.slice().splice(1));
+    this.getHisthory(this.taskProvider.history);
   }
 
   getHisthory(h: PlayerTaskModel[]) {

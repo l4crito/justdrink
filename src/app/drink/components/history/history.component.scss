@@ -29,12 +29,16 @@
         .player {
             font-weight: 350;
             font-size: .8rem;
+            span{
+                color: tomato;
+                margin-left: 1rem;
+            }
         }
         .action {
             font-family: Verdana, Geneva, Tahoma, sans-serif;
             font-weight: 500;
             color: rgba(255, 255, 255, 0.577);
-            line-height: 0.7rem;
+            line-height: 0.9rem;
         }
     }
 }

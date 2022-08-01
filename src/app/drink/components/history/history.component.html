@@ -10,11 +10,11 @@
         <mat-icon>keyboard_arrow_down</mat-icon>
     </div>
 </div>
-<div *ngFor="let line of history" class="flex-start history">
+<div *ngFor="let line of history; let i=index" class="flex-start history">
     <div class="flex-center round">{{line.round}}</div>
     <div class="task-container">
         <section class="taskk" *ngFor="let task of line.tasks" (click)="filterHistory(task.player)" matRipple>
-            <div class="player">{{task.player?.name }}</div>
+            <div class="player">{{task.player?.name }} <span *ngIf="i===0" class="current">Reto actual</span></div>
             <div class="action">{{task.task?.taskToPlay |firstCapital}}</div>
         </section>
     </div>
