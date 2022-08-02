@@ -1,20 +1,20 @@
 <div class="tit flex-center">
-    <div class="flex-center title">{{title}} <span *ngIf="selectedPlayer">[ {{selectedPlayer?.name}} ]
-            <button mat-icon-button (click)="initHistory()">
-                <mat-icon>close</mat-icon>
-            </button>
+    <div class="flex-center title">{{title}} <span *ngIf="selectedPlayer" @rightToLeft> {{selectedPlayer.name}} 
         </span>
+        <button mat-icon-button (click)="initHistory()" @apearAnimation *ngIf="selectedPlayer" >
+            <mat-icon>close</mat-icon>
+        </button>
     </div>
 
     <div class="history-btn  ns pointer flex-center" routerLink="/tomar" @rightToLeft>
         <mat-icon>keyboard_arrow_down</mat-icon>
     </div>
 </div>
-<div *ngFor="let line of history; let i=index" class="flex-start history">
+<div *ngFor="let line of history" class="flex-start history">
     <div class="flex-center round">{{line.round}}</div>
     <div class="task-container">
         <section class="taskk" *ngFor="let task of line.tasks; let ti=index" (click)="filterHistory(task.player)" matRipple>
-            <div class="player">{{task.player?.name }} <span *ngIf="i===0&&ti===0" class="current">Reto actual</span></div>
+            <div class="player">{{task.player?.name }} <span *ngIf="task.task?.selected" class="current">Reto actual</span></div>
             <div class="action">{{task.task?.taskToPlay |firstCapital}}</div>
         </section>
     </div>

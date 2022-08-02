@@ -1,11 +1,11 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { PlayerProvider } from '../shared/provider/player.provider';
-import { apearAnimation, nameAnimation, playerAnimation, zoomIn, rotateLeft, inOutAnimation } from '../animations';
+import { apearAnimation, nameAnimation, playerAnimation, zoomIn, rotateLeft, inOutAnimation, leftRightNumeric } from '../animations';
 import { Hotkey, HotkeysService } from 'angular2-hotkeys';
 import { Router } from '@angular/router';
 import { TaskProvider } from '../shared/provider/task.provider';
 @Component({
-  animations: [nameAnimation, playerAnimation, apearAnimation, zoomIn, rotateLeft, inOutAnimation],
+  animations: [nameAnimation, playerAnimation, apearAnimation, zoomIn, rotateLeft, inOutAnimation,leftRightNumeric],
   selector: 'app-drink',
   templateUrl: './drink.component.html',
   styleUrls: ['./drink.component.scss']

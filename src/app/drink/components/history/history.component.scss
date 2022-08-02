@@ -15,7 +15,7 @@
 .tit {
     height: 80px;
     position: relative;
-    width: 100%;
+    flex-grow: 1;
 }
 
 .task-container{
@@ -62,9 +62,13 @@
         margin-left: 5rem;
 }
 .title{
+    flex-grow: 1;
     span{
         color: #f44336;
         margin-left: .5rem;
+    }
+    button{
+        color: tomato;
     }
 }
 @media all and(max-width:800px) {

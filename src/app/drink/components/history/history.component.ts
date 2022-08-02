@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { rightToLeft } from 'src/app/animations';
+import { apearAnimation, rightToLeft } from 'src/app/animations';
 import { HistoryModel } from 'src/app/models/history.model';
 import { PlayerModel } from 'src/app/models/player.model';
 import { PlayerTaskModel } from 'src/app/models/task.model';
 import { TaskProvider } from 'src/app/shared/provider/task.provider';
 
 @Component({
-  animations:[rightToLeft],
+  animations:[rightToLeft,apearAnimation],
   selector: 'app-history',
   templateUrl: './history.component.html',
   styleUrls: ['./history.component.scss']
@@ -21,10 +21,17 @@ export class HistoryComponent implements OnInit {
 
   ngOnInit(): void {
   }
-  initHistory() {
+  async initHistory() {
     this.title="Historial"
     this.history = [];
     this.selectedPlayer = null;
+    this.taskProvider.history.forEach(h=>{
+      if(h.task){
+        h.task.selected=false;
+      }
+    });
+    if(this.taskProvider.history[0].task)
+    this.taskProvider.history[0].task.selected=true;
     this.getHisthory(this.taskProvider.history);
   }
 
@@ -40,7 +47,7 @@ export class HistoryComponent implements OnInit {
   }
 
   filterHistory(player?: PlayerModel | undefined | null) {
-    if (!player) {
+    if (!player || this.selectedPlayer) {
       return;
     }
     this.history = [];

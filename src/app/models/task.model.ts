@@ -7,6 +7,7 @@ export interface TaskModel {
     type?: TaskType;
     highlight?: boolean;
     round?: number;
+    selected?: boolean;
 }
 
 export enum TaskType {
