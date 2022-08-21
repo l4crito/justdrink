@@ -14,10 +14,9 @@
     <div class="flex-center round">{{line.round}}</div>
     <div class="task-container">
         <section class="taskk" *ngFor="let task of line.tasks; let ti=index" (click)="filterHistory(task.player)" matRipple>
-            <div class="player">{{task.player?.name }} <span *ngIf="task.task?.selected" class="current">Reto actual</span></div>
-            <div class="action">{{task.task?.taskToPlay |firstCapital}}</div>
+            <div class="player" *ngIf="!selectedPlayer">{{task.player?.name }} <span *ngIf="task.task?.selected" class="current">Reto actual</span></div>
+            <div class="action">{{task.task?.taskToPlay |firstCapital}} <span *ngIf="selectedPlayer&&task.task?.selected" class="current"><br> Reto actual</span></div>
         </section>
     </div>
-
 </div>
 <div class="blank-space"></div>

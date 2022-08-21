@@ -8,6 +8,7 @@ export interface TaskModel {
     highlight?: boolean;
     round?: number;
     selected?: boolean;
+    times: number;
 }
 
 export enum TaskType {

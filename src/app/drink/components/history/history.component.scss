@@ -71,6 +71,9 @@
         color: tomato;
     }
 }
+.current{
+    color: tomato;
+}
 @media all and(max-width:800px) {
     .history-btn {
         top: inherit;

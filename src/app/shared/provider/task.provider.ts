@@ -106,9 +106,18 @@ export class TaskProvider {
       }
 
       const tasks: TaskModel[] = result.filter(t => t.id.trim() && t.reto.trim()).map(t => {
-        return { id: t.id, task: t.reto, type: t.tipo, round: t.ronda ? t.ronda : -1 }
+        return { id: t.id.trim(), task: t.reto.trim(), type: t.tipo, round: t.ronda ? t.ronda : -1, times: t.repetir? Number(t.repetir):0 }
       });
-      this.taskPool = tasks;
+
+      const nTasks:TaskModel[]=[];
+      tasks.filter(t=> t.times).forEach(task=> {
+        for (let i = 0; i < task.times; i++) {
+          nTasks.push(task)
+        }
+      });
+      this.taskPool = tasks.filter(t=> !t.times).concat(nTasks);
+      console.log("tasks:",tasks.length)
+      console.log("nTasks:",this.taskPool.length)
       this.storePool();
       this.animateDears();
       this.filterTasks();
