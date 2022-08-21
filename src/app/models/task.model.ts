@@ -4,7 +4,7 @@ export interface TaskModel {
     id: any;
     task?: string;
     taskToPlay?: string;
-    type?: TaskType;
+    type?: 'n'|'s';
     highlight?: boolean;
     round?: number;
     selected?: boolean;

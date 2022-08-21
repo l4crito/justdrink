@@ -235,10 +235,10 @@ export class PlayerProvider {
             setItem(Names.CURRENT_TASK, task);
             const lastTask = this.lastAssignedTask();
             this.taskProvider.currentTask = task;
-            if(this.taskProvider.history){
-              const historyItem={task:task,player:this.currentPlayer,round:this.taskProvider.round};
+            if (this.taskProvider.history) {
+              const historyItem = { task: task, player: this.currentPlayer, round: this.taskProvider.round };
               this.taskProvider.history.unshift(historyItem);
-              localStorage.setItem(Names.HISTORY,JSON.stringify(this.taskProvider.history));
+              localStorage.setItem(Names.HISTORY, JSON.stringify(this.taskProvider.history));
             }
             if (lastTask) {
               lastTask.task = task;
@@ -250,10 +250,10 @@ export class PlayerProvider {
     }, 280);
   }
 
-clearHistory(){
-  this.taskProvider.history=[];
-  localStorage.setItem(Names.HISTORY,JSON.stringify(this.taskProvider.history));
-}
+  clearHistory() {
+    this.taskProvider.history = [];
+    localStorage.setItem(Names.HISTORY, JSON.stringify(this.taskProvider.history));
+  }
   finsh() {
     this.clearHistory();
     this.taskProvider.assignedTasks = [];
@@ -290,7 +290,7 @@ clearHistory(){
 
   }
 
-  getOtherPlayer(taskType?: TaskType) {
+  getOtherPlayer(taskType?: 'n'|'s') {
 
     if (taskType === TaskType.HOT && this.currentPlayer?.color) {
       return this.players.filter(player => player.color === this.currentPlayer?.color)
@@ -309,9 +309,9 @@ clearHistory(){
     }
     return otherPlayers.length ? otherPlayers[Math.floor(Math.random() * otherPlayers.length)] : this.getRandomPlayer();
   }
-  getRandomPlayer(taskType?: TaskType) {
-    if (taskType === TaskType.HOT && this.currentPlayer?.banColor) {
-      return this.players.filter(player => player.banColor === this.currentPlayer?.banColor)
+  getRandomPlayer(taskType?: 'n'|'s') {
+    if (taskType === TaskType.HOT && this.currentPlayer?.color) {
+      return this.players.filter(player => player.color === this.currentPlayer?.color)
         .find(player => player.name !== this.currentPlayer?.name);
     }
     let anyPlayer = this.players.filter(player => player.name !== this.currentPlayer?.name)
@@ -319,7 +319,6 @@ clearHistory(){
     if (this.currentPlayer?.banColor) {
       anyPlayer = anyPlayer.filter(player => player.banColor !== this.currentPlayer?.banColor);
     }
-
     return anyPlayer.length ? anyPlayer[Math.floor(Math.random() * anyPlayer.length)] : null;
   }
 
