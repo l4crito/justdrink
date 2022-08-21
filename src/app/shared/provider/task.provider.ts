@@ -116,9 +116,6 @@ export class TaskProvider {
       
       this.taskPool = tasks.filter(t=> !t.times).concat(nTasks);
       this.taskPool.forEach((t,i)=>t.id=i);
-      console.log("tasks:",tasks.length)
-      console.log("nTasks:",this.taskPool.length)
-      console.log(this.taskPool)
       this.storePool();
       this.animateDears();
       this.filterTasks();

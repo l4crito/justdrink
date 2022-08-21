@@ -1,0 +1,11 @@
+---
+repos:
+  - repo: local
+    hooks:
+      - id: tests
+        name: unit tests
+        language: system
+        pass_filenames: false
+        always_run: true
+        entry: bash -c 'ng test --browsers ChromeHeadless'
+

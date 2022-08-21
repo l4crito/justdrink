@@ -1,5 +1,5 @@
 import { Gender, PlayerModel, PlayerPosition } from "src/app/models/player.model";
-export const MOCKED_PLAYERS :PlayerModel[]=[
+export const MOCKED_PLAYERS: PlayerModel[] = [
     {
         name: "Chris",
         position: PlayerPosition.LEFT,
@@ -22,6 +22,7 @@ export const MOCKED_PLAYERS :PlayerModel[]=[
         female: false,
         assigningPartner: false,
         assigningBan: false,
+        banColor: "red",
     },
     {
         name: "diana",
@@ -35,8 +36,24 @@ export const MOCKED_PLAYERS :PlayerModel[]=[
         position: PlayerPosition.LEFT,
         assigningPartner: false,
         assigningBan: false,
+        banColor: 'red'
     },
 ]
 
-export const CHRIS_MOCKED_PLAYER:PlayerModel=MOCKED_PLAYERS[0];
-export const CHRIS_MOCKED_PARTNER:PlayerModel=MOCKED_PLAYERS[1];
+export const CHRIS_MOCKED_PLAYER: PlayerModel = MOCKED_PLAYERS[0];
+export const CHRIS_MOCKED_PARTNER: PlayerModel = MOCKED_PLAYERS[1];
+export const DIEGO_MOCKED_PLAYER: PlayerModel = {
+    name: "diego",
+    position: PlayerPosition.LEFT,
+    female: false,
+    assigningPartner: false,
+    assigningBan: false,
+    banColor: "red",
+};
+export const DIEGO_MOCKED_BAN: PlayerModel = {
+    name: "jose",
+    position: PlayerPosition.LEFT,
+    assigningPartner: false,
+    assigningBan: false,
+    banColor: 'red'
+};
