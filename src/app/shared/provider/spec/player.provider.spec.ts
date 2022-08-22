@@ -37,12 +37,20 @@ describe('Player provider', () => {
             expect(task.taskToPlay).not.toContain(DIEGO_MOCKED_BAN.name)
         });
     });
-    it('Should always get a banned, (same gender)', () => {
+    it('Should never get a banned, (same gender)', () => {
         playerProvider.currentPlayer = DIEGO_MOCKED_PLAYER;
         playerProvider.players = MOCKED_PLAYERS;
         MOCKED_TASKS.filter(t => t.type === TaskType.HOT && t.task?.includes('(a)')).forEach(task => {
             playerProvider.verifyTask(task)
             expect(task.taskToPlay).not.toContain(DIEGO_MOCKED_BAN.name)
+        });
+    });
+    it('Should never get other players partner', () => {
+        playerProvider.currentPlayer = DIEGO_MOCKED_PLAYER;
+        playerProvider.players = MOCKED_PLAYERS;
+        MOCKED_TASKS.filter(t => t.type === TaskType.HOT && (t.task?.includes('(a)')||t.task?.includes('(o)'))).forEach(task => {
+            playerProvider.verifyTask(task)
+            expect(task.taskToPlay).not.toContain(CHRIS_MOCKED_PARTNER.name)
         });
     });
 

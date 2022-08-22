@@ -87,7 +87,7 @@ export class PlayerProvider {
   removePlayer(player: PlayerModel, evt: any) {
     evt?.preventDefault();
     evt?.stopImmediatePropagation();
-    this.removePartner(player.color);
+    this.removePartner(player.partnerColor);
     this.players = this.players.filter(pla => pla.name !== player.name);
     this.playerTasks = this.playerTasks.filter(playerTask => playerTask.player.name !== player.name);
     this.deletePlayerTasks(player);
@@ -108,23 +108,23 @@ export class PlayerProvider {
     if (!current) {
       return;
     }
-    if (current.color && !this.partner || this.partner?.name === current.name) {
-      this.removePartner(current.color);
+    if (current.partnerColor && !this.partner || this.partner?.name === current.name) {
+      this.removePartner(current.partnerColor);
       this.partner = null;
       return;
     }
 
     if (this.partner) {
-      if (current?.color) {
-        this.removePartner(current.color);
+      if (current?.partnerColor) {
+        this.removePartner(current.partnerColor);
       }
-      current.color = this.partner.color;
+      current.partnerColor = this.partner.partnerColor;
       this.partner.assigningPartner = false;
       this.partner = null;
     } else {
       this.partner = current;
       const color = this.colors.pop();
-      this.partner.color = color;
+      this.partner.partnerColor = color;
       this.partner.assigningPartner = true;
     }
     this.storePlayers();
@@ -133,8 +133,8 @@ export class PlayerProvider {
     this.colors.push(color);
     this.colors = [...new Set(this.colors)];
 
-    this.players.filter(play => play?.color === color).forEach(p => {
-      p.color = null;
+    this.players.filter(play => play?.partnerColor === color).forEach(p => {
+      p.partnerColor = null;
       p.assigningPartner = false;
     });
     this.storePlayers();
@@ -290,34 +290,37 @@ export class PlayerProvider {
 
   }
 
-  getOtherPlayer(taskType?: 'n'|'s') {
+  getOtherPlayer(taskType?: 'n' | 's') {
 
-    if (taskType === TaskType.HOT && this.currentPlayer?.color) {
-      return this.players.filter(player => player.color === this.currentPlayer?.color)
+    if (taskType === TaskType.HOT && this.currentPlayer?.partnerColor) {
+      return this.players.filter(player => player.partnerColor === this.currentPlayer?.partnerColor)
         .find(player => player.name !== this.currentPlayer?.name);
     }
     let otherPlayers = [];
     otherPlayers = this.players
       .filter(player => player.female !== this.currentPlayer?.female)
       .filter(player => player.name !== this.currentPlayer?.name)
+      .filter(player => !player.partnerColor)
 
     if (this.currentPlayer?.banColor) {
       otherPlayers = otherPlayers.filter(player => player.banColor !== this.currentPlayer?.banColor);
     }
     if (taskType === TaskType.HOT) {
-      otherPlayers = otherPlayers.filter(player => !player.color);
+      otherPlayers = otherPlayers.filter(player => !player.partnerColor);
     }
     return otherPlayers.length ? otherPlayers[Math.floor(Math.random() * otherPlayers.length)] : this.getRandomPlayer();
   }
-  getRandomPlayer(taskType?: 'n'|'s') {
-    if (taskType === TaskType.HOT && this.currentPlayer?.color) {
-      return this.players.filter(player => player.color === this.currentPlayer?.color)
+  getRandomPlayer(taskType?: 'n' | 's') {
+    if (taskType === TaskType.HOT && this.currentPlayer?.partnerColor) {
+      return this.players.filter(player => player.partnerColor === this.currentPlayer?.partnerColor)
         .find(player => player.name !== this.currentPlayer?.name);
     }
     let anyPlayer = this.players.filter(player => player.name !== this.currentPlayer?.name)
 
     if (this.currentPlayer?.banColor) {
-      anyPlayer = anyPlayer.filter(player => player.banColor !== this.currentPlayer?.banColor);
+      anyPlayer = anyPlayer
+        .filter(player => player.banColor !== this.currentPlayer?.banColor)
+        .filter(player => !player.partnerColor);        ;
     }
     return anyPlayer.length ? anyPlayer[Math.floor(Math.random() * anyPlayer.length)] : null;
   }

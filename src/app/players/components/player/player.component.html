@@ -1,7 +1,7 @@
 <div class="line flex-between player ns" (click)="this.playerProvider.toogleGender(player)" mat-ripple>
     <div class="flex-start">
         <button mat-icon-button (click)="playerProvider.assignPartner(player,$event)">
-            <mat-icon [ngStyle]="{color:player.color?player.color:'grey'}"
+            <mat-icon [ngStyle]="{color:player.partnerColor?player.partnerColor:'grey'}"
                 [ngClass]="{'heart': player.assigningPartner}">favorite_border</mat-icon>
         </button>
         <mat-label [ngClass]="{'highlight': player.highlight,'male': !player.female,'female': player.female}">
