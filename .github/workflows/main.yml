@@ -16,7 +16,7 @@ jobs:
           node-version: '12.x'
       - run: yarn install
       - run: npm run ng build -- --prod --base-href=/justdrink/
-      - run: npm ng test -- --browsers ChromeHeadless
+      - run: npm run ng test -- --browsers ChromeHeadless
       
 
       - name: Deploy 🚀
